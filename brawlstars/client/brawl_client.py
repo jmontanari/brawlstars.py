@@ -21,6 +21,7 @@ class BrawlClient:
     def __init__(self, key: str):
         configuration = Configuration()
         configuration.api_key['authorization'] = key
+        configuration.api_key_prefix = "Bearer"
         self.client = ApiClient(configuration)
 
     def get_brawlers(self) -> List[Brawler]:
