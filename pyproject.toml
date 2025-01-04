@@ -4,11 +4,11 @@ authors = [{ name = "jmontanari" }]
 version = "1.0.0"
 description = "A python wrapper for the Brawlstars API"
 requires-python = ">=3.9.0"
-dependencies = ["httpx"]
+dependencies = ["aiohttp", "python_dateutil", "urllib3", "six", "certifi"]
 
 [project.urls]
 repository = "https://github.com/jmontanari/brawlstars.py"
 
 [tool.setuptools]
-packages = ["api", "api.swagger_client", "api.swagger_client.api", "api.swagger_client.models"]
+packages = ["client", "api", "api.swagger_client", "api.swagger_client.api", "api.swagger_client.models"]
 include-package-data = true
