@@ -10,5 +10,5 @@ dependencies = ["aiohttp", "python_dateutil", "urllib3", "six", "certifi"]
 repository = "https://github.com/jmontanari/brawlstars.py"
 
 [tool.setuptools]
-packages = ["client", "api", "api.swagger_client", "api.swagger_client.api", "api.swagger_client.models"]
+packages = ["brawlstars", "brawlstars.client", "brawlstars.api", "babrawlstars.models"]
 include-package-data = true
