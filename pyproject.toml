@@ -1,0 +1,15 @@
+
+[project]
+name = "brawlstars.py"
+authors = [{ name = "jmontanari" }]
+version = "1.0.0"
+description = "A python wrapper for the Brawlstars API"
+requires-python = ">=3.9.0"
+dependencies = ["httpx"]
+
+[project.urls]
+repository = "https://github.com/jmontanari/brawlstars.py
+
+[tool.setuptools]
+packages = ["brawl_stars_api_client", "brawl_stars_api_client.api", "brawl_stars_api_client.models"]
+include-package-data = true
