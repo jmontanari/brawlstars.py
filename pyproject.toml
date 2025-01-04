@@ -4,6 +4,7 @@ authors = [{ name = "jmontanari" }]
 version = "1.0.2"
 description = "A python wrapper for the Brawlstars API"
 requires-python = ">=3.9.0"
+readme = "README.md"
 dependencies = ["aiohttp", "python_dateutil", "urllib3", "six", "certifi"]
 
 [project.urls]
