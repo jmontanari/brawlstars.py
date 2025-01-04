@@ -10,5 +10,5 @@ dependencies = ["httpx"]
 repository = "https://github.com/jmontanari/brawlstars.py"
 
 [tool.setuptools]
-packages = ["brawl_stars_api_client", "brawl_stars_api_client.api", "brawl_stars_api_client.models"]
+packages = ["api", "api.swagger_client", "api.swagger_client.api", "api.swagger_client.models"]
 include-package-data = true
