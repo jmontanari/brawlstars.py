@@ -1,4 +1,4 @@
-# .RankingsApi
+# generated.RankingsApi
 
 All URIs are relative to *https://api.brawlstars.com/v1*
 
@@ -19,18 +19,18 @@ Get brawler rankings for a country or global rankings. Brawler identifiers can b
 ```python
 from __future__ import print_function
 import time
-import 
-from .rest import ApiException
+import generated
+from generated.rest import ApiException
 from pprint import pprint
 
 # Configure API key authorization: JWT
-configuration = .Configuration()
+configuration = generated.Configuration()
 configuration.api_key['authorization'] = 'YOUR_API_KEY'
 # Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
 # configuration.api_key_prefix['authorization'] = 'Bearer'
 
 # create an instance of the API class
-api_instance = .RankingsApi(.ApiClient(configuration))
+api_instance = generated.RankingsApi(generated.ApiClient(configuration))
 country_code = 'country_code_example' # str | Two letter country code, or 'global' for global rankings.
 brawler_id = 'brawler_id_example' # str | Identifier of the brawler.
 before = 'before_example' # str | Return only items that occur before this marker. Before marker can be found from the response, inside the 'paging' property. Note that only after or before can be specified for a request, not both.  (optional)
@@ -81,18 +81,18 @@ Get club rankings for a country or global rankings.
 ```python
 from __future__ import print_function
 import time
-import 
-from .rest import ApiException
+import generated
+from generated.rest import ApiException
 from pprint import pprint
 
 # Configure API key authorization: JWT
-configuration = .Configuration()
+configuration = generated.Configuration()
 configuration.api_key['authorization'] = 'YOUR_API_KEY'
 # Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
 # configuration.api_key_prefix['authorization'] = 'Bearer'
 
 # create an instance of the API class
-api_instance = .RankingsApi(.ApiClient(configuration))
+api_instance = generated.RankingsApi(generated.ApiClient(configuration))
 country_code = 'country_code_example' # str | Two letter country code, or 'global' for global rankings.
 before = 'before_example' # str | Return only items that occur before this marker. Before marker can be found from the response, inside the 'paging' property. Note that only after or before can be specified for a request, not both.  (optional)
 after = 'after_example' # str | Return only items that occur after this marker. Before marker can be found from the response, inside the 'paging' property. Note that only after or before can be specified for a request, not both.  (optional)
@@ -141,18 +141,18 @@ Get player rankings for a country or global rankings.
 ```python
 from __future__ import print_function
 import time
-import 
-from .rest import ApiException
+import generated
+from generated.rest import ApiException
 from pprint import pprint
 
 # Configure API key authorization: JWT
-configuration = .Configuration()
+configuration = generated.Configuration()
 configuration.api_key['authorization'] = 'YOUR_API_KEY'
 # Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
 # configuration.api_key_prefix['authorization'] = 'Bearer'
 
 # create an instance of the API class
-api_instance = .RankingsApi(.ApiClient(configuration))
+api_instance = generated.RankingsApi(generated.ApiClient(configuration))
 country_code = 'country_code_example' # str | Two letter country code, or 'global' for global rankings.
 before = 'before_example' # str | Return only items that occur before this marker. Before marker can be found from the response, inside the 'paging' property. Note that only after or before can be specified for a request, not both.  (optional)
 after = 'after_example' # str | Return only items that occur after this marker. Before marker can be found from the response, inside the 'paging' property. Note that only after or before can be specified for a request, not both.  (optional)

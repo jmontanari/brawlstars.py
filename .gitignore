@@ -22,3 +22,6 @@ dmypy.json
 /coverage.xml
 /.coverage
 BrawlStars.iml
+brawlstars/git_push.sh
+/brawlstars/test/
+/brawlstars/.swagger-codegen/

@@ -1,20 +1,20 @@
 from typing import List
 
-from brawlstars.api.brawlers_api import BrawlersApi
-from brawlstars.api.clubs_api import ClubsApi
-from brawlstars.api.events_api import EventsApi
-from brawlstars.api.players_api import PlayersApi
-from brawlstars.api.rankings_api import RankingsApi
-from brawlstars.api_client import ApiClient
-from brawlstars.configuration import Configuration
-from brawlstars.models.battle import Battle
-from brawlstars.models.brawler import Brawler
-from brawlstars.models.club import Club
-from brawlstars.models.club_member import ClubMember
-from brawlstars.models.club_ranking import ClubRanking
-from brawlstars.models.player import Player
-from brawlstars.models.player_ranking import PlayerRanking
-from brawlstars.models.scheduled_event import ScheduledEvent
+from brawlstars.generated.api.brawlers_api import BrawlersApi
+from brawlstars.generated.api.clubs_api import ClubsApi
+from brawlstars.generated.api.events_api import EventsApi
+from brawlstars.generated.api.players_api import PlayersApi
+from brawlstars.generated.api.rankings_api import RankingsApi
+from brawlstars.generated.api_client import ApiClient
+from brawlstars.generated.configuration import Configuration
+from brawlstars.generated.models.battle import Battle
+from brawlstars.generated.models.brawler import Brawler
+from brawlstars.generated.models.club import Club
+from brawlstars.generated.models.club_member import ClubMember
+from brawlstars.generated.models.club_ranking import ClubRanking
+from brawlstars.generated.models.player import Player
+from brawlstars.generated.models.player_ranking import PlayerRanking
+from brawlstars.generated.models.scheduled_event import ScheduledEvent
 
 
 class BrawlClient:

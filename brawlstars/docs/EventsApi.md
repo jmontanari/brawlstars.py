@@ -1,4 +1,4 @@
-# .EventsApi
+# generated.EventsApi
 
 All URIs are relative to *https://api.brawlstars.com/v1*
 
@@ -17,18 +17,18 @@ Get event rotation for ongoing events.
 ```python
 from __future__ import print_function
 import time
-import 
-from .rest import ApiException
+import generated
+from generated.rest import ApiException
 from pprint import pprint
 
 # Configure API key authorization: JWT
-configuration = .Configuration()
+configuration = generated.Configuration()
 configuration.api_key['authorization'] = 'YOUR_API_KEY'
 # Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
 # configuration.api_key_prefix['authorization'] = 'Bearer'
 
 # create an instance of the API class
-api_instance = .EventsApi(.ApiClient(configuration))
+api_instance = generated.EventsApi(generated.ApiClient(configuration))
 
 try:
     # Get event rotation
