@@ -14,17 +14,13 @@ consumes:
 produces:
   - application/json
 tags:
-  -
-    name: players
+  - name: players
     description: Access player specific information
-  -
-    name: clubs
+  - name: clubs
     description: Access club specific information
-  -
-    name: rankings
+  - name: rankings
     description: Access global and local rankings
-  -
-    name: brawlers
+  - name: brawlers
     description: Access general brawler information
 responses:
   InMaintenanceSpec:
@@ -779,6 +775,10 @@ definitions:
         type: string
       detail:
         type: object
+  List:
+    type: array
+    items:
+      type: object
 paths:
   /brawlers:
     get:
@@ -788,22 +788,19 @@ paths:
       tags:
         - brawlers
       parameters:
-        -
-          name: before
+        - name: before
           in: query
           description: |
             Return only items that occur before this marker. Before marker can be found from the response, inside the 'paging' property. Note that only after or before can be specified for a request, not both.
           required: false
           type: string
-        -
-          name: after
+        - name: after
           in: query
           description: |
             Return only items that occur after this marker. Before marker can be found from the response, inside the 'paging' property. Note that only after or before can be specified for a request, not both.
           required: false
           type: string
-        -
-          name: limit
+        - name: limit
           in: query
           description: Limit the number of items returned in the response.
           required: false
@@ -833,28 +830,24 @@ paths:
       tags:
         - clubs
       parameters:
-        -
-          name: clubTag
+        - name: clubTag
           in: path
           description: Tag of the club.
           required: true
           type: string
-        -
-          name: before
+        - name: before
           in: query
           description: |
             Return only items that occur before this marker. Before marker can be found from the response, inside the 'paging' property. Note that only after or before can be specified for a request, not both.
           required: false
           type: string
-        -
-          name: after
+        - name: after
           in: query
           description: |
             Return only items that occur after this marker. Before marker can be found from the response, inside the 'paging' property. Note that only after or before can be specified for a request, not both.
           required: false
           type: string
-        -
-          name: limit
+        - name: limit
           in: query
           description: Limit the number of items returned in the response.
           required: false
@@ -885,8 +878,7 @@ paths:
       tags:
         - players
       parameters:
-        -
-          name: playerTag
+        - name: playerTag
           in: path
           description: Tag of the player.
           required: true
@@ -917,8 +909,7 @@ paths:
       tags:
         - players
       parameters:
-        -
-          name: playerTag
+        - name: playerTag
           in: path
           description: Tag of the player.
           required: true
@@ -973,8 +964,7 @@ paths:
       tags:
         - clubs
       parameters:
-        -
-          name: clubTag
+        - name: clubTag
           in: path
           description: Tag of the club.
           required: true
@@ -1004,28 +994,24 @@ paths:
       tags:
         - rankings
       parameters:
-        -
-          name: countryCode
+        - name: countryCode
           in: path
           description: Two letter country code, or 'global' for global rankings.
           required: true
           type: string
-        -
-          name: before
+        - name: before
           in: query
           description: |
             Return only items that occur before this marker. Before marker can be found from the response, inside the 'paging' property. Note that only after or before can be specified for a request, not both.
           required: false
           type: string
-        -
-          name: after
+        - name: after
           in: query
           description: |
             Return only items that occur after this marker. Before marker can be found from the response, inside the 'paging' property. Note that only after or before can be specified for a request, not both.
           required: false
           type: string
-        -
-          name: limit
+        - name: limit
           in: query
           description: Limit the number of items returned in the response.
           required: false
@@ -1056,34 +1042,29 @@ paths:
       tags:
         - rankings
       parameters:
-        -
-          name: countryCode
+        - name: countryCode
           in: path
           description: Two letter country code, or 'global' for global rankings.
           required: true
           type: string
-        -
-          name: brawlerId
+        - name: brawlerId
           in: path
           description: Identifier of the brawler.
           required: true
           type: string
-        -
-          name: before
+        - name: before
           in: query
           description: |
             Return only items that occur before this marker. Before marker can be found from the response, inside the 'paging' property. Note that only after or before can be specified for a request, not both.
           required: false
           type: string
-        -
-          name: after
+        - name: after
           in: query
           description: |
             Return only items that occur after this marker. Before marker can be found from the response, inside the 'paging' property. Note that only after or before can be specified for a request, not both.
           required: false
           type: string
-        -
-          name: limit
+        - name: limit
           in: query
           description: Limit the number of items returned in the response.
           required: false
@@ -1113,8 +1094,7 @@ paths:
       tags:
         - brawlers
       parameters:
-        -
-          name: brawlerId
+        - name: brawlerId
           in: path
           description: Identifier of the brawler.
           required: true
@@ -1144,28 +1124,24 @@ paths:
       tags:
         - rankings
       parameters:
-        -
-          name: countryCode
+        - name: countryCode
           in: path
           description: Two letter country code, or 'global' for global rankings.
           required: true
           type: string
-        -
-          name: before
+        - name: before
           in: query
           description: |
             Return only items that occur before this marker. Before marker can be found from the response, inside the 'paging' property. Note that only after or before can be specified for a request, not both.
           required: false
           type: string
-        -
-          name: after
+        - name: after
           in: query
           description: |
             Return only items that occur after this marker. Before marker can be found from the response, inside the 'paging' property. Note that only after or before can be specified for a request, not both.
           required: false
           type: string
-        -
-          name: limit
+        - name: limit
           in: query
           description: Limit the number of items returned in the response.
           required: false
@@ -1194,5 +1170,4 @@ securityDefinitions:
     name: authorization
     in: header
 security:
-  -
-    JWT: []
+  - JWT: [ ]

@@ -45,7 +45,9 @@ coverage.xml
 *,cover
 .hypothesis/
 venv/
+.venv/
 .python-version
+.pytest_cache
 
 # Translations
 *.mo
@@ -62,9 +64,10 @@ target/
 
 #Ipython Notebook
 .ipynb_checkpoints
-generator/swagger-codegen-cli-3.0.66.jar
+.idea/
+.travis.yml
+.gitlab-ci.yml
+*.iml
+Dockerfile
 git_push.sh
 tox.ini
-.idea/
-.swagger-codegen/VERSION
-.travis.yml
