@@ -5,6 +5,4 @@
   download latest swagger-codegen jar
   from https://mvnrepository.com/artifact/io.swagger.codegen.v3/swagger-codegen-cli/latest
   `
-  java -jar openapi-generator-cli-7.10.0.jar generate -g python-pydantic-v1 -i swagger.yaml --strict-spec false -o ../
-  --package-name brawlstars.generated --git-user-id jmontanari --git-repo-id=brawlstars.py -p
-  projectName=brawlstars.py,packageVersion=1.0.3`
+  java -jar openapi-generator-cli-7.10.0.jar generate -g python-aiohttp -i swagger.yaml --strict-spec false -o ../ --package-name brawlstars.generated --git-user-id jmontanari --git-repo-id=brawlstars.py -p projectName=brawlstars.py,packageVersion=1.0.3`

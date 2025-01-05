@@ -17,102 +17,118 @@ import pprint
 import re  # noqa: F401
 import json
 
-
-from typing import List, Optional
-from pydantic import BaseModel, Field, StrictBool, StrictInt, StrictStr, conlist, validator
+from pydantic import BaseModel, ConfigDict, Field, StrictBool, StrictInt, StrictStr, field_validator
+from typing import Any, ClassVar, Dict, List, Optional
 from brawlstars.generated.models.banned_brawler_entry import BannedBrawlerEntry
 from brawlstars.generated.models.player_entry import PlayerEntry
+from typing import Optional, Set
+from typing_extensions import Self
 
 class RegisterMatchRequest(BaseModel):
     """
     RegisterMatchRequest
-    """
+    """ # noqa: E501
     mode: Optional[StrictStr] = None
-    players: Optional[conlist(PlayerEntry)] = None
+    players: Optional[List[PlayerEntry]] = None
     location_id: Optional[StrictInt] = Field(default=None, alias="locationId")
     wins_required: Optional[StrictInt] = Field(default=None, alias="winsRequired")
     gadgets_allowed: Optional[StrictBool] = Field(default=None, alias="gadgetsAllowed")
-    banned_brawlers: Optional[conlist(BannedBrawlerEntry)] = Field(default=None, alias="bannedBrawlers")
+    banned_brawlers: Optional[List[BannedBrawlerEntry]] = Field(default=None, alias="bannedBrawlers")
     timer_preset: Optional[StrictStr] = Field(default=None, alias="timerPreset")
-    __properties = ["mode", "players", "locationId", "winsRequired", "gadgetsAllowed", "bannedBrawlers", "timerPreset"]
+    __properties: ClassVar[List[str]] = ["mode", "players", "locationId", "winsRequired", "gadgetsAllowed", "bannedBrawlers", "timerPreset"]
 
-    @validator('mode')
+    @field_validator('mode')
     def mode_validate_enum(cls, value):
         """Validates the enum"""
         if value is None:
             return value
 
-        if value not in ('regular', 'powerMatch',):
+        if value not in set(['regular', 'powerMatch']):
             raise ValueError("must be one of enum values ('regular', 'powerMatch')")
         return value
 
-    @validator('timer_preset')
+    @field_validator('timer_preset')
     def timer_preset_validate_enum(cls, value):
         """Validates the enum"""
         if value is None:
             return value
 
-        if value not in ('default', 'longer', 'longest',):
+        if value not in set(['default', 'longer', 'longest']):
             raise ValueError("must be one of enum values ('default', 'longer', 'longest')")
         return value
 
-    class Config:
-        """Pydantic configuration"""
-        allow_population_by_field_name = True
-        validate_assignment = True
+    model_config = ConfigDict(
+        populate_by_name=True,
+        validate_assignment=True,
+        protected_namespaces=(),
+    )
+
 
     def to_str(self) -> str:
         """Returns the string representation of the model using alias"""
-        return pprint.pformat(self.dict(by_alias=True))
+        return pprint.pformat(self.model_dump(by_alias=True))
 
     def to_json(self) -> str:
         """Returns the JSON representation of the model using alias"""
+        # TODO: pydantic v2: use .model_dump_json(by_alias=True, exclude_unset=True) instead
         return json.dumps(self.to_dict())
 
     @classmethod
-    def from_json(cls, json_str: str) -> RegisterMatchRequest:
+    def from_json(cls, json_str: str) -> Optional[Self]:
         """Create an instance of RegisterMatchRequest from a JSON string"""
         return cls.from_dict(json.loads(json_str))
 
-    def to_dict(self):
-        """Returns the dictionary representation of the model using alias"""
-        _dict = self.dict(by_alias=True,
-                          exclude={
-                          },
-                          exclude_none=True)
+    def to_dict(self) -> Dict[str, Any]:
+        """Return the dictionary representation of the model using alias.
+
+        This has the following differences from calling pydantic's
+        `self.model_dump(by_alias=True)`:
+
+        * `None` is only added to the output dict for nullable fields that
+          were set at model initialization. Other fields with value `None`
+          are ignored.
+        """
+        excluded_fields: Set[str] = set([
+        ])
+
+        _dict = self.model_dump(
+            by_alias=True,
+            exclude=excluded_fields,
+            exclude_none=True,
+        )
         # override the default output from pydantic by calling `to_dict()` of each item in players (list)
         _items = []
         if self.players:
-            for _item in self.players:
-                if _item:
-                    _items.append(_item.to_dict())
+            for _item_players in self.players:
+                if _item_players:
+                    _items.append(_item_players.to_dict())
             _dict['players'] = _items
         # override the default output from pydantic by calling `to_dict()` of each item in banned_brawlers (list)
         _items = []
         if self.banned_brawlers:
-            for _item in self.banned_brawlers:
-                if _item:
-                    _items.append(_item.to_dict())
+            for _item_banned_brawlers in self.banned_brawlers:
+                if _item_banned_brawlers:
+                    _items.append(_item_banned_brawlers.to_dict())
             _dict['bannedBrawlers'] = _items
         return _dict
 
     @classmethod
-    def from_dict(cls, obj: dict) -> RegisterMatchRequest:
+    def from_dict(cls, obj: Optional[Dict[str, Any]]) -> Optional[Self]:
         """Create an instance of RegisterMatchRequest from a dict"""
         if obj is None:
             return None
 
         if not isinstance(obj, dict):
-            return RegisterMatchRequest.parse_obj(obj)
+            return cls.model_validate(obj)
 
-        _obj = RegisterMatchRequest.parse_obj({
+        _obj = cls.model_validate({
             "mode": obj.get("mode"),
-            "players": [PlayerEntry.from_dict(_item) for _item in obj.get("players")] if obj.get("players") is not None else None,
-            "location_id": obj.get("locationId"),
-            "wins_required": obj.get("winsRequired"),
-            "gadgets_allowed": obj.get("gadgetsAllowed"),
-            "banned_brawlers": [BannedBrawlerEntry.from_dict(_item) for _item in obj.get("bannedBrawlers")] if obj.get("bannedBrawlers") is not None else None,
-            "timer_preset": obj.get("timerPreset")
+            "players": [PlayerEntry.from_dict(_item) for _item in obj["players"]] if obj.get("players") is not None else None,
+            "locationId": obj.get("locationId"),
+            "winsRequired": obj.get("winsRequired"),
+            "gadgetsAllowed": obj.get("gadgetsAllowed"),
+            "bannedBrawlers": [BannedBrawlerEntry.from_dict(_item) for _item in obj["bannedBrawlers"]] if obj.get("bannedBrawlers") is not None else None,
+            "timerPreset": obj.get("timerPreset")
         })
         return _obj
 

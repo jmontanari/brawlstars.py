@@ -17,122 +17,138 @@ import pprint
 import re  # noqa: F401
 import json
 
-
-from typing import List, Optional
-from pydantic import BaseModel, Field, StrictInt, StrictStr, conlist, validator
+from pydantic import BaseModel, ConfigDict, Field, StrictInt, StrictStr, field_validator
+from typing import Any, ClassVar, Dict, List, Optional
 from brawlstars.generated.models.completed_game import CompletedGame
 from brawlstars.generated.models.match_team import MatchTeam
 from brawlstars.generated.models.player_match_status import PlayerMatchStatus
+from typing import Optional, Set
+from typing_extensions import Self
 
 class Match(BaseModel):
     """
     Match
-    """
+    """ # noqa: E501
     initiative_side: Optional[StrictInt] = Field(default=None, alias="initiativeSide")
     round: Optional[StrictInt] = None
-    teams: Optional[conlist(MatchTeam)] = None
+    teams: Optional[List[MatchTeam]] = None
     termination_reason: Optional[StrictStr] = Field(default=None, alias="terminationReason")
-    games: Optional[conlist(CompletedGame)] = None
+    games: Optional[List[CompletedGame]] = None
     phase: Optional[StrictStr] = None
-    players: Optional[conlist(PlayerMatchStatus)] = None
+    players: Optional[List[PlayerMatchStatus]] = None
     state: Optional[StrictStr] = None
     id: Optional[StrictStr] = None
-    __properties = ["initiativeSide", "round", "teams", "terminationReason", "games", "phase", "players", "state", "id"]
+    __properties: ClassVar[List[str]] = ["initiativeSide", "round", "teams", "terminationReason", "games", "phase", "players", "state", "id"]
 
-    @validator('termination_reason')
+    @field_validator('termination_reason')
     def termination_reason_validate_enum(cls, value):
         """Validates the enum"""
         if value is None:
             return value
 
-        if value not in ('none', 'playerDisconnected', 'playerNotResponding', 'technicalError', 'matchTooLong', 'other',):
+        if value not in set(['none', 'playerDisconnected', 'playerNotResponding', 'technicalError', 'matchTooLong', 'other']):
             raise ValueError("must be one of enum values ('none', 'playerDisconnected', 'playerNotResponding', 'technicalError', 'matchTooLong', 'other')")
         return value
 
-    @validator('phase')
+    @field_validator('phase')
     def phase_validate_enum(cls, value):
         """Validates the enum"""
         if value is None:
             return value
 
-        if value not in ('init', 'banHeroes', 'pickHeroes', 'finalPreparation', 'battle', 'matchResult', 'ending',):
+        if value not in set(['init', 'banHeroes', 'pickHeroes', 'finalPreparation', 'battle', 'matchResult', 'ending']):
             raise ValueError("must be one of enum values ('init', 'banHeroes', 'pickHeroes', 'finalPreparation', 'battle', 'matchResult', 'ending')")
         return value
 
-    @validator('state')
+    @field_validator('state')
     def state_validate_enum(cls, value):
         """Validates the enum"""
         if value is None:
             return value
 
-        if value not in ('open', 'cancelled', 'completed',):
+        if value not in set(['open', 'cancelled', 'completed']):
             raise ValueError("must be one of enum values ('open', 'cancelled', 'completed')")
         return value
 
-    class Config:
-        """Pydantic configuration"""
-        allow_population_by_field_name = True
-        validate_assignment = True
+    model_config = ConfigDict(
+        populate_by_name=True,
+        validate_assignment=True,
+        protected_namespaces=(),
+    )
+
 
     def to_str(self) -> str:
         """Returns the string representation of the model using alias"""
-        return pprint.pformat(self.dict(by_alias=True))
+        return pprint.pformat(self.model_dump(by_alias=True))
 
     def to_json(self) -> str:
         """Returns the JSON representation of the model using alias"""
+        # TODO: pydantic v2: use .model_dump_json(by_alias=True, exclude_unset=True) instead
         return json.dumps(self.to_dict())
 
     @classmethod
-    def from_json(cls, json_str: str) -> Match:
+    def from_json(cls, json_str: str) -> Optional[Self]:
         """Create an instance of Match from a JSON string"""
         return cls.from_dict(json.loads(json_str))
 
-    def to_dict(self):
-        """Returns the dictionary representation of the model using alias"""
-        _dict = self.dict(by_alias=True,
-                          exclude={
-                          },
-                          exclude_none=True)
+    def to_dict(self) -> Dict[str, Any]:
+        """Return the dictionary representation of the model using alias.
+
+        This has the following differences from calling pydantic's
+        `self.model_dump(by_alias=True)`:
+
+        * `None` is only added to the output dict for nullable fields that
+          were set at model initialization. Other fields with value `None`
+          are ignored.
+        """
+        excluded_fields: Set[str] = set([
+        ])
+
+        _dict = self.model_dump(
+            by_alias=True,
+            exclude=excluded_fields,
+            exclude_none=True,
+        )
         # override the default output from pydantic by calling `to_dict()` of each item in teams (list)
         _items = []
         if self.teams:
-            for _item in self.teams:
-                if _item:
-                    _items.append(_item.to_dict())
+            for _item_teams in self.teams:
+                if _item_teams:
+                    _items.append(_item_teams.to_dict())
             _dict['teams'] = _items
         # override the default output from pydantic by calling `to_dict()` of each item in games (list)
         _items = []
         if self.games:
-            for _item in self.games:
-                if _item:
-                    _items.append(_item.to_dict())
+            for _item_games in self.games:
+                if _item_games:
+                    _items.append(_item_games.to_dict())
             _dict['games'] = _items
         # override the default output from pydantic by calling `to_dict()` of each item in players (list)
         _items = []
         if self.players:
-            for _item in self.players:
-                if _item:
-                    _items.append(_item.to_dict())
+            for _item_players in self.players:
+                if _item_players:
+                    _items.append(_item_players.to_dict())
             _dict['players'] = _items
         return _dict
 
     @classmethod
-    def from_dict(cls, obj: dict) -> Match:
+    def from_dict(cls, obj: Optional[Dict[str, Any]]) -> Optional[Self]:
         """Create an instance of Match from a dict"""
         if obj is None:
             return None
 
         if not isinstance(obj, dict):
-            return Match.parse_obj(obj)
+            return cls.model_validate(obj)
 
-        _obj = Match.parse_obj({
-            "initiative_side": obj.get("initiativeSide"),
+        _obj = cls.model_validate({
+            "initiativeSide": obj.get("initiativeSide"),
             "round": obj.get("round"),
-            "teams": [MatchTeam.from_dict(_item) for _item in obj.get("teams")] if obj.get("teams") is not None else None,
-            "termination_reason": obj.get("terminationReason"),
-            "games": [CompletedGame.from_dict(_item) for _item in obj.get("games")] if obj.get("games") is not None else None,
+            "teams": [MatchTeam.from_dict(_item) for _item in obj["teams"]] if obj.get("teams") is not None else None,
+            "terminationReason": obj.get("terminationReason"),
+            "games": [CompletedGame.from_dict(_item) for _item in obj["games"]] if obj.get("games") is not None else None,
             "phase": obj.get("phase"),
-            "players": [PlayerMatchStatus.from_dict(_item) for _item in obj.get("players")] if obj.get("players") is not None else None,
+            "players": [PlayerMatchStatus.from_dict(_item) for _item in obj["players"]] if obj.get("players") is not None else None,
             "state": obj.get("state"),
             "id": obj.get("id")
         })

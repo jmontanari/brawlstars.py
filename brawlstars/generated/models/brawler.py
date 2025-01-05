@@ -17,76 +17,92 @@ import pprint
 import re  # noqa: F401
 import json
 
-
-from typing import Any, Dict, List, Optional
-from pydantic import BaseModel, Field, StrictInt, conlist
+from pydantic import BaseModel, ConfigDict, Field, StrictInt
+from typing import Any, ClassVar, Dict, List, Optional
 from brawlstars.generated.models.accessory import Accessory
 from brawlstars.generated.models.star_power import StarPower
+from typing import Optional, Set
+from typing_extensions import Self
 
 class Brawler(BaseModel):
     """
     Brawler
-    """
-    gadgets: Optional[conlist(Accessory)] = None
+    """ # noqa: E501
+    gadgets: Optional[List[Accessory]] = None
     name: Optional[Dict[str, Any]] = None
     id: Optional[StrictInt] = None
-    star_powers: Optional[conlist(StarPower)] = Field(default=None, alias="starPowers")
-    __properties = ["gadgets", "name", "id", "starPowers"]
+    star_powers: Optional[List[StarPower]] = Field(default=None, alias="starPowers")
+    __properties: ClassVar[List[str]] = ["gadgets", "name", "id", "starPowers"]
 
-    class Config:
-        """Pydantic configuration"""
-        allow_population_by_field_name = True
-        validate_assignment = True
+    model_config = ConfigDict(
+        populate_by_name=True,
+        validate_assignment=True,
+        protected_namespaces=(),
+    )
+
 
     def to_str(self) -> str:
         """Returns the string representation of the model using alias"""
-        return pprint.pformat(self.dict(by_alias=True))
+        return pprint.pformat(self.model_dump(by_alias=True))
 
     def to_json(self) -> str:
         """Returns the JSON representation of the model using alias"""
+        # TODO: pydantic v2: use .model_dump_json(by_alias=True, exclude_unset=True) instead
         return json.dumps(self.to_dict())
 
     @classmethod
-    def from_json(cls, json_str: str) -> Brawler:
+    def from_json(cls, json_str: str) -> Optional[Self]:
         """Create an instance of Brawler from a JSON string"""
         return cls.from_dict(json.loads(json_str))
 
-    def to_dict(self):
-        """Returns the dictionary representation of the model using alias"""
-        _dict = self.dict(by_alias=True,
-                          exclude={
-                          },
-                          exclude_none=True)
+    def to_dict(self) -> Dict[str, Any]:
+        """Return the dictionary representation of the model using alias.
+
+        This has the following differences from calling pydantic's
+        `self.model_dump(by_alias=True)`:
+
+        * `None` is only added to the output dict for nullable fields that
+          were set at model initialization. Other fields with value `None`
+          are ignored.
+        """
+        excluded_fields: Set[str] = set([
+        ])
+
+        _dict = self.model_dump(
+            by_alias=True,
+            exclude=excluded_fields,
+            exclude_none=True,
+        )
         # override the default output from pydantic by calling `to_dict()` of each item in gadgets (list)
         _items = []
         if self.gadgets:
-            for _item in self.gadgets:
-                if _item:
-                    _items.append(_item.to_dict())
+            for _item_gadgets in self.gadgets:
+                if _item_gadgets:
+                    _items.append(_item_gadgets.to_dict())
             _dict['gadgets'] = _items
         # override the default output from pydantic by calling `to_dict()` of each item in star_powers (list)
         _items = []
         if self.star_powers:
-            for _item in self.star_powers:
-                if _item:
-                    _items.append(_item.to_dict())
+            for _item_star_powers in self.star_powers:
+                if _item_star_powers:
+                    _items.append(_item_star_powers.to_dict())
             _dict['starPowers'] = _items
         return _dict
 
     @classmethod
-    def from_dict(cls, obj: dict) -> Brawler:
+    def from_dict(cls, obj: Optional[Dict[str, Any]]) -> Optional[Self]:
         """Create an instance of Brawler from a dict"""
         if obj is None:
             return None
 
         if not isinstance(obj, dict):
-            return Brawler.parse_obj(obj)
+            return cls.model_validate(obj)
 
-        _obj = Brawler.parse_obj({
-            "gadgets": [Accessory.from_dict(_item) for _item in obj.get("gadgets")] if obj.get("gadgets") is not None else None,
+        _obj = cls.model_validate({
+            "gadgets": [Accessory.from_dict(_item) for _item in obj["gadgets"]] if obj.get("gadgets") is not None else None,
             "name": obj.get("name"),
             "id": obj.get("id"),
-            "star_powers": [StarPower.from_dict(_item) for _item in obj.get("starPowers")] if obj.get("starPowers") is not None else None
+            "starPowers": [StarPower.from_dict(_item) for _item in obj["starPowers"]] if obj.get("starPowers") is not None else None
         })
         return _obj
 

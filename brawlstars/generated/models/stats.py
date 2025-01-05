@@ -17,14 +17,15 @@ import pprint
 import re  # noqa: F401
 import json
 
-
-from typing import Optional
-from pydantic import BaseModel, Field, StrictBool, StrictInt
+from pydantic import BaseModel, ConfigDict, Field, StrictBool, StrictInt
+from typing import Any, ClassVar, Dict, List, Optional
+from typing import Optional, Set
+from typing_extensions import Self
 
 class Stats(BaseModel):
     """
     Stats
-    """
+    """ # noqa: E501
     healing_done: Optional[StrictInt] = Field(default=None, alias="healingDone")
     deaths: Optional[StrictInt] = None
     damage_dealt: Optional[StrictInt] = Field(default=None, alias="damageDealt")
@@ -52,71 +53,86 @@ class Stats(BaseModel):
     objectives_stolen: Optional[StrictInt] = Field(default=None, alias="objectivesStolen")
     brawl_ball_shots_on_goal: Optional[StrictInt] = Field(default=None, alias="brawlBallShotsOnGoal")
     brawl_ball_shots_saved: Optional[StrictInt] = Field(default=None, alias="brawlBallShotsSaved")
-    __properties = ["healingDone", "deaths", "damageDealt", "kills", "averageLatency", "damageReceived", "totalDamageToSafe", "totalDamageToPets", "siegeDamageToRobot", "siegeBoltsCollected", "brawlBallGoalsScored", "gemGrabGemsCollected", "gemGrabGemsLost", "bountyStarsGained", "bountyStarsLost", "superUsedCount", "gadgetUsedCount", "bountyPickedMiddleStar", "matchEndKillStreak", "maxKillStreak", "hotZoneInsideZonePercentage", "healingDoneToSelf", "healingDoneToTeamMates", "objectivesRecovered", "objectivesStolen", "brawlBallShotsOnGoal", "brawlBallShotsSaved"]
+    __properties: ClassVar[List[str]] = ["healingDone", "deaths", "damageDealt", "kills", "averageLatency", "damageReceived", "totalDamageToSafe", "totalDamageToPets", "siegeDamageToRobot", "siegeBoltsCollected", "brawlBallGoalsScored", "gemGrabGemsCollected", "gemGrabGemsLost", "bountyStarsGained", "bountyStarsLost", "superUsedCount", "gadgetUsedCount", "bountyPickedMiddleStar", "matchEndKillStreak", "maxKillStreak", "hotZoneInsideZonePercentage", "healingDoneToSelf", "healingDoneToTeamMates", "objectivesRecovered", "objectivesStolen", "brawlBallShotsOnGoal", "brawlBallShotsSaved"]
 
-    class Config:
-        """Pydantic configuration"""
-        allow_population_by_field_name = True
-        validate_assignment = True
+    model_config = ConfigDict(
+        populate_by_name=True,
+        validate_assignment=True,
+        protected_namespaces=(),
+    )
+
 
     def to_str(self) -> str:
         """Returns the string representation of the model using alias"""
-        return pprint.pformat(self.dict(by_alias=True))
+        return pprint.pformat(self.model_dump(by_alias=True))
 
     def to_json(self) -> str:
         """Returns the JSON representation of the model using alias"""
+        # TODO: pydantic v2: use .model_dump_json(by_alias=True, exclude_unset=True) instead
         return json.dumps(self.to_dict())
 
     @classmethod
-    def from_json(cls, json_str: str) -> Stats:
+    def from_json(cls, json_str: str) -> Optional[Self]:
         """Create an instance of Stats from a JSON string"""
         return cls.from_dict(json.loads(json_str))
 
-    def to_dict(self):
-        """Returns the dictionary representation of the model using alias"""
-        _dict = self.dict(by_alias=True,
-                          exclude={
-                          },
-                          exclude_none=True)
+    def to_dict(self) -> Dict[str, Any]:
+        """Return the dictionary representation of the model using alias.
+
+        This has the following differences from calling pydantic's
+        `self.model_dump(by_alias=True)`:
+
+        * `None` is only added to the output dict for nullable fields that
+          were set at model initialization. Other fields with value `None`
+          are ignored.
+        """
+        excluded_fields: Set[str] = set([
+        ])
+
+        _dict = self.model_dump(
+            by_alias=True,
+            exclude=excluded_fields,
+            exclude_none=True,
+        )
         return _dict
 
     @classmethod
-    def from_dict(cls, obj: dict) -> Stats:
+    def from_dict(cls, obj: Optional[Dict[str, Any]]) -> Optional[Self]:
         """Create an instance of Stats from a dict"""
         if obj is None:
             return None
 
         if not isinstance(obj, dict):
-            return Stats.parse_obj(obj)
+            return cls.model_validate(obj)
 
-        _obj = Stats.parse_obj({
-            "healing_done": obj.get("healingDone"),
+        _obj = cls.model_validate({
+            "healingDone": obj.get("healingDone"),
             "deaths": obj.get("deaths"),
-            "damage_dealt": obj.get("damageDealt"),
+            "damageDealt": obj.get("damageDealt"),
             "kills": obj.get("kills"),
-            "average_latency": obj.get("averageLatency"),
-            "damage_received": obj.get("damageReceived"),
-            "total_damage_to_safe": obj.get("totalDamageToSafe"),
-            "total_damage_to_pets": obj.get("totalDamageToPets"),
-            "siege_damage_to_robot": obj.get("siegeDamageToRobot"),
-            "siege_bolts_collected": obj.get("siegeBoltsCollected"),
-            "brawl_ball_goals_scored": obj.get("brawlBallGoalsScored"),
-            "gem_grab_gems_collected": obj.get("gemGrabGemsCollected"),
-            "gem_grab_gems_lost": obj.get("gemGrabGemsLost"),
-            "bounty_stars_gained": obj.get("bountyStarsGained"),
-            "bounty_stars_lost": obj.get("bountyStarsLost"),
-            "super_used_count": obj.get("superUsedCount"),
-            "gadget_used_count": obj.get("gadgetUsedCount"),
-            "bounty_picked_middle_star": obj.get("bountyPickedMiddleStar"),
-            "match_end_kill_streak": obj.get("matchEndKillStreak"),
-            "max_kill_streak": obj.get("maxKillStreak"),
-            "hot_zone_inside_zone_percentage": obj.get("hotZoneInsideZonePercentage"),
-            "healing_done_to_self": obj.get("healingDoneToSelf"),
-            "healing_done_to_team_mates": obj.get("healingDoneToTeamMates"),
-            "objectives_recovered": obj.get("objectivesRecovered"),
-            "objectives_stolen": obj.get("objectivesStolen"),
-            "brawl_ball_shots_on_goal": obj.get("brawlBallShotsOnGoal"),
-            "brawl_ball_shots_saved": obj.get("brawlBallShotsSaved")
+            "averageLatency": obj.get("averageLatency"),
+            "damageReceived": obj.get("damageReceived"),
+            "totalDamageToSafe": obj.get("totalDamageToSafe"),
+            "totalDamageToPets": obj.get("totalDamageToPets"),
+            "siegeDamageToRobot": obj.get("siegeDamageToRobot"),
+            "siegeBoltsCollected": obj.get("siegeBoltsCollected"),
+            "brawlBallGoalsScored": obj.get("brawlBallGoalsScored"),
+            "gemGrabGemsCollected": obj.get("gemGrabGemsCollected"),
+            "gemGrabGemsLost": obj.get("gemGrabGemsLost"),
+            "bountyStarsGained": obj.get("bountyStarsGained"),
+            "bountyStarsLost": obj.get("bountyStarsLost"),
+            "superUsedCount": obj.get("superUsedCount"),
+            "gadgetUsedCount": obj.get("gadgetUsedCount"),
+            "bountyPickedMiddleStar": obj.get("bountyPickedMiddleStar"),
+            "matchEndKillStreak": obj.get("matchEndKillStreak"),
+            "maxKillStreak": obj.get("maxKillStreak"),
+            "hotZoneInsideZonePercentage": obj.get("hotZoneInsideZonePercentage"),
+            "healingDoneToSelf": obj.get("healingDoneToSelf"),
+            "healingDoneToTeamMates": obj.get("healingDoneToTeamMates"),
+            "objectivesRecovered": obj.get("objectivesRecovered"),
+            "objectivesStolen": obj.get("objectivesStolen"),
+            "brawlBallShotsOnGoal": obj.get("brawlBallShotsOnGoal"),
+            "brawlBallShotsSaved": obj.get("brawlBallShotsSaved")
         })
         return _obj
 

@@ -71,3 +71,7 @@ target/
 Dockerfile
 git_push.sh
 tox.ini
+openapi_server/
+tests/
+.openapi-generator/
+.swagger-codegen/
