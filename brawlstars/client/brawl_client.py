@@ -1,6 +1,6 @@
 from typing import List
 
-from brawlstars.generated import StarPower, Accessory
+from brawlstars.generated import StarPower, Accessory, BrawlerList
 from brawlstars.generated.api.brawlers_api import BrawlersApi
 from brawlstars.generated.api.clubs_api import ClubsApi
 from brawlstars.generated.api.events_api import EventsApi
@@ -40,6 +40,8 @@ class BrawlClient:
 
     def get_brawlers(self) -> List[Brawler]:
         response = BrawlersApi(self.client).get_brawlers()
+        brawler_list = self.__cast_response(response, BrawlerList)
+        brawler_list2 = self.client.deserialize(response, BrawlerList)
         brawlers: List[Brawler] = self.__cast_response(response, Brawler)
         for brawler in brawlers:
             brawler.star_powers = self.__cast_response(brawler.star_powers, StarPower)
