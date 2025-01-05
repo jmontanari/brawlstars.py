@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "brawlstars.py"
-version = "1.0.5"
+version = "1.0.6"
 description = "Brawl Stars API"
 authors = ["OpenAPI Generator Community <team@openapitools.org>"]
 license = "NoLicense"
