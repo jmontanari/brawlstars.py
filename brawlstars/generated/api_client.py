@@ -18,6 +18,7 @@ import os
 import re
 import tempfile
 from multiprocessing.pool import ThreadPool
+from typing import Dict, List
 
 # python 2 and python 3 compatibility library
 import six
@@ -26,6 +27,7 @@ from six.moves.urllib.parse import quote
 import brawlstars.generated.models
 from brawlstars.generated import rest
 from brawlstars.generated.configuration import Configuration
+from brawlstars.generated.models import *
 
 
 class ApiClient(object):
@@ -58,6 +60,25 @@ class ApiClient(object):
         'date': datetime.date,
         'datetime': datetime.datetime,
         'object': object,
+    }
+    LIST_TYPE_MAPPING = {
+        "AccessoryList": Accessory,
+        "BattleList": Battle,
+        "BrawlerList": Brawler,
+        "BrawlerStatList": BrawlerStat,
+        "ClubMemberList": ClubMember,
+        "ClubRankingList": ClubRanking,
+        "CompletedGameList": CompletedGame,
+        "CompletedGameTeamList": CompletedGameTeam,
+        "EventModifierList": EventModifier,
+        "GearInfoList": GearInfo,
+        "GearStatList": GearStat,
+        "MatchLocationList": MatchLocation,
+        "MatchTeamList": MatchTeam,
+        "MatchTeamPlayerList": MatchTeamPlayer,
+        "PlayerMatchStatusList": PlayerMatchStatus,
+        "PlayerRankingList": PlayerRanking,
+        "StarPowerList": StarPower
     }
 
     def __init__(self, configuration=None, header_name=None, header_value=None,
@@ -195,7 +216,7 @@ class ApiClient(object):
             return None
         elif isinstance(obj, self.PRIMITIVE_TYPES):
             return obj
-        elif isinstance(obj, list):
+        elif isinstance(obj, List):
             return [self.sanitize_for_serialization(sub_obj)
                     for sub_obj in obj]
         elif isinstance(obj, tuple):
@@ -255,6 +276,22 @@ class ApiClient(object):
             return None
 
         if type(klass) == str:
+            if klass in self.LIST_TYPE_MAPPING:
+                sub_kls = self.LIST_TYPE_MAPPING[klass]
+                try:
+                    if isinstance(data, Dict):
+                        response = [self.__deserialize_model(item, sub_kls) for item in
+                                    data["items"]]
+                        return response
+                    if isinstance(data, List):
+                        response = [self.__deserialize_model(item, sub_kls) for item in
+                                    data]
+                        return response
+                    else:
+                        response = self.__deserialize_model(data, sub_kls)
+                        return response
+                except Exception as e:
+                    print(e)
             if klass.startswith('list['):
                 sub_kls = re.match(r'list\[(.*)\]', klass).group(1)
                 return [self.__deserialize(sub_data, sub_kls)
@@ -622,7 +659,7 @@ class ApiClient(object):
             for attr, attr_type in six.iteritems(klass.swagger_types):
                 if (data is not None and
                         klass.attribute_map[attr] in data and
-                        isinstance(data, (list, dict))):
+                        isinstance(data, (List, Dict))):
                     value = data[klass.attribute_map[attr]]
                     kwargs[attr] = self.__deserialize(value, attr_type)
 
