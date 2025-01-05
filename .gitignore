@@ -75,3 +75,4 @@ openapi_server/
 tests/
 .openapi-generator/
 .swagger-codegen/
+test/
