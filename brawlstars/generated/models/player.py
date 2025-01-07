@@ -34,7 +34,7 @@ class Player(object):
     swagger_types = {
         'club': 'PlayerClub',
         'is_qualified_from_championship_challenge': 'bool',
-        '3vs3_victories': 'int',
+        'trio_victories': 'int',
         'icon': 'PlayerIcon',
         'tag': 'str',
         'name': 'str',
@@ -53,7 +53,7 @@ class Player(object):
     attribute_map = {
         'club': 'club',
         'is_qualified_from_championship_challenge': 'isQualifiedFromChampionshipChallenge',
-        '3vs3_victories': '3vs3Victories',
+        'trio_victories': '3vs3Victories',
         'icon': 'icon',
         'tag': 'tag',
         'name': 'name',
@@ -69,7 +69,7 @@ class Player(object):
         'name_color': 'nameColor'
     }
 
-    def __init__(self, club=None, is_qualified_from_championship_challenge=None, _3vs3_victories=None, icon=None,
+    def __init__(self, club=None, is_qualified_from_championship_challenge=None, trio_victories=None, icon=None,
                  tag=None, name=None, trophies=None, exp_level=None, exp_points=None, highest_trophies=None,
                  solo_victories=None, duo_victories=None, best_robo_rumble_time=None, best_time_as_big_brawler=None,
                  brawlers=None, name_color=None, _configuration=None):  # noqa: E501
@@ -80,7 +80,7 @@ class Player(object):
 
         self._club = None
         self._is_qualified_from_championship_challenge = None
-        self.__3vs3_victories = None
+        self._trio_victories = None
         self._icon = None
         self._tag = None
         self._name = None
@@ -100,8 +100,8 @@ class Player(object):
             self.club = club
         if is_qualified_from_championship_challenge is not None:
             self.is_qualified_from_championship_challenge = is_qualified_from_championship_challenge
-        if _3vs3_victories is not None:
-            self._3vs3_victories = _3vs3_victories
+        if trio_victories is not None:
+            self.trio_victories = trio_victories
         if icon is not None:
             self.icon = icon
         if tag is not None:
@@ -172,17 +172,17 @@ class Player(object):
         self._is_qualified_from_championship_challenge = is_qualified_from_championship_challenge
 
     @property
-    def _3vs3_victories(self):
+    def trio_victories(self):
         """Gets the _3vs3_victories of this Player.  # noqa: E501
 
 
         :return: The _3vs3_victories of this Player.  # noqa: E501
         :rtype: int
         """
-        return self.__3vs3_victories
+        return self._trio_victories
 
-    @_3vs3_victories.setter
-    def _3vs3_victories(self, _3vs3_victories):
+    @trio_victories.setter
+    def trio_victories(self, trio_victories):
         """Sets the _3vs3_victories of this Player.
 
 
@@ -190,7 +190,7 @@ class Player(object):
         :type: int
         """
 
-        self.__3vs3_victories = _3vs3_victories
+        self._trio_victories = trio_victories
 
     @property
     def icon(self):
