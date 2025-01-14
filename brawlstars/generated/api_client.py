@@ -11,7 +11,6 @@
 
 from __future__ import absolute_import
 
-import asyncio
 import datetime
 import json
 import mimetypes
@@ -99,9 +98,8 @@ class ApiClient(object):
         self.user_agent = 'Swagger-Codegen/1.0.0/python'
         self.client_side_validation = configuration.client_side_validation
 
-        if configuration.password:
-            asyncio.run(self.rest_client.initialise_keys())
-
+    async def init_keys(self):
+        await self.rest_client.initialise_keys()
         self.configuration.api_key['authorization'] = next(self.configuration.keys)
 
     def __del__(self):

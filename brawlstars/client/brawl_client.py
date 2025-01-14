@@ -23,7 +23,7 @@ class BrawlClient:
         self.configuration.api_key_prefix['authorization'] = 'Bearer'
         self.client = None
 
-    def login(self, email: str, password: str):
+    async def login(self, email: str, password: str):
         """Retrieves all keys and creates an HTTP connection ready for use.
 
         Parameters
@@ -41,8 +41,9 @@ class BrawlClient:
         self.configuration.api_key_prefix['authorization'] = 'Bearer'
 
         self.client = ApiClient(self.configuration)
+        await self.client.init_keys()
 
-    def login_with_token(self, token: str) -> None:
+    async def login_with_token(self, token: str) -> None:
         """Creates an HTTP connection ready for use with the tokens you provide.
 
         Parameters
