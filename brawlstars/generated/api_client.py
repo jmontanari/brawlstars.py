@@ -100,12 +100,7 @@ class ApiClient(object):
         self.client_side_validation = configuration.client_side_validation
 
         if configuration.password:
-            try:
-                loop = asyncio.get_running_loop()
-            except RuntimeError:  # No event loop is running, create a new one
-                loop = asyncio.new_event_loop()
-                asyncio.set_event_loop(loop)
-            loop.run_until_complete(self.rest_client.initialise_keys())
+            asyncio.run(self.rest_client.initialise_keys())
 
         self.configuration.api_key['authorization'] = next(self.configuration.keys)
 
