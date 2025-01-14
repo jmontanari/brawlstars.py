@@ -11,6 +11,7 @@
 
 from __future__ import absolute_import
 
+import asyncio
 import datetime
 import json
 import mimetypes
@@ -98,6 +99,11 @@ class ApiClient(object):
         self.user_agent = 'Swagger-Codegen/1.0.0/python'
         self.client_side_validation = configuration.client_side_validation
 
+        if configuration.password:
+            asyncio.get_event_loop().run_until_complete(self.rest_client.initialise_keys())
+
+        self.configuration.api_key['authorization'] = next(self.configuration.keys)
+
     def __del__(self):
         if self._pool is not None:
             self._pool.close()
@@ -173,7 +179,7 @@ class ApiClient(object):
             body = self.sanitize_for_serialization(body)
 
         # request url
-        url = self.configuration.host + resource_path
+        url = self.configuration.api_url + resource_path
 
         # perform request and return response
         response_data = self.request(

@@ -5,5 +5,5 @@
   download latest swagger-codegen jar
   from https://mvnrepository.com/artifact/io.swagger/swagger-codegen-cli/latest
   ```
-  java -jar swagger-codegen-cli-2.4.44.jar generate -l python  -i swagger.yaml -o ../ --additional-properties packageName=brawlstars.generated -l python
+  java -jar swagger-codegen-cli-2.4.44.jar generate -l python  -i swagger.yaml -o ../ --additional-properties packageName=brawlstars -l python
 - ```

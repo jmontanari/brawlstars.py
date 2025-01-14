@@ -13,7 +13,7 @@
 from setuptools import setup, find_packages  # noqa: H301
 
 NAME = "brawlstars.py"
-VERSION = "1.0.6"
+VERSION = "1.1.0"
 # To install the library, run the following
 #
 # python setup.py install
@@ -26,6 +26,7 @@ REQUIRES = [
     "python-dateutil>=2.1",
     "six>=1.10",
     "urllib3>=1.23"
+    "aiohttp>=3.0.0"
 ]
 
 setup(

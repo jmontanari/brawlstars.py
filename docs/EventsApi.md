@@ -1,13 +1,13 @@
-# brawlstars.generated.EventsApi
+# brawlstars.EventsApi
 
 All URIs are relative to *https://api.brawlstars.com/v1*
 
-Method | HTTP request | Description
-------------- | ------------- | -------------
-[**get_scheduled_events**](EventsApi.md#get_scheduled_events) | **GET** /events/rotation | Get event rotation
-
+ Method                                                        | HTTP request             | Description        
+---------------------------------------------------------------|--------------------------|--------------------
+ [**get_scheduled_events**](EventsApi.md#get_scheduled_events) | **GET** /events/rotation | Get event rotation 
 
 # **get_scheduled_events**
+
 > ScheduledEvents get_scheduled_events()
 
 Get event rotation
@@ -15,21 +15,22 @@ Get event rotation
 Get event rotation for ongoing events.
 
 ### Example
+
 ```python
 from __future__ import print_function
 import time
-import brawlstars.generated
+import brawlstars
 from brawlstars.generated.rest import ApiException
 from pprint import pprint
 
 # Configure API key authorization: JWT
-configuration = brawlstars.generated.Configuration()
+configuration = brawlstars.Configuration()
 configuration.api_key['authorization'] = 'YOUR_API_KEY'
 # Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
 # configuration.api_key_prefix['authorization'] = 'Bearer'
 
 # create an instance of the API class
-api_instance = brawlstars.generated.EventsApi(brawlstars.generated.ApiClient(configuration))
+api_instance = brawlstars.EventsApi(brawlstars.ApiClient(configuration))
 
 try:
     # Get event rotation
@@ -40,6 +41,7 @@ except ApiException as e:
 ```
 
 ### Parameters
+
 This endpoint does not need any parameter.
 
 ### Return type
@@ -52,8 +54,8 @@ This endpoint does not need any parameter.
 
 ### HTTP request headers
 
- - **Content-Type**: application/json
- - **Accept**: application/json
+- **Content-Type**: application/json
+- **Accept**: application/json
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 

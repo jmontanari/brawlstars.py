@@ -18,11 +18,41 @@ from brawlstars.generated.models.scheduled_event import ScheduledEvent
 
 
 class BrawlClient:
-    def __init__(self, key: str):
-        configuration = Configuration()
-        configuration.api_key_prefix['authorization'] = 'Bearer'
-        configuration.api_key['authorization'] = key
-        self.client = ApiClient(configuration)
+    def __init__(self):
+        self.configuration = Configuration()
+        self.configuration.api_key_prefix['authorization'] = 'Bearer'
+        self.client = None
+
+    def login(self, email: str, password: str):
+        """Retrieves all keys and creates an HTTP connection ready for use.
+
+        Parameters
+        ----------
+        email : str
+            Your password email from https://developer.clashofclans.com
+            This is used when updating keys automatically if your IP changes
+
+        password : str
+            Your password login from https://developer.clashofclans.com
+            This is used when updating keys automatically if your IP changes
+        """
+        self.configuration.email = email
+        self.configuration.password = password
+        self.configuration.api_key_prefix['authorization'] = 'Bearer'
+
+        self.client = ApiClient(self.configuration)
+
+    def login_with_token(self, token: str) -> None:
+        """Creates an HTTP connection ready for use with the tokens you provide.
+
+        Parameters
+        ----------
+        key: str
+            Token as found from https://developer.brawlstars.com under "My account" -> <your key> -> "token".
+        """
+        self.configuration.api_key['authorization'] = token
+
+        self.client = ApiClient(self.configuration)
 
     def get_brawlers(self) -> List[Brawler]:
         response = BrawlersApi(self.client).get_brawlers()
