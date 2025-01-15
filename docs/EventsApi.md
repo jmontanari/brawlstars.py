@@ -42,13 +42,13 @@ configuration.api_key['JWT'] = os.environ["API_KEY"]
 # configuration.api_key_prefix['JWT'] = 'Bearer'
 
 # Enter a context with an instance of the API client
-async with brawlstars.ApiClient(configuration) as api_client:
+with brawlstars.ApiClient(configuration) as api_client:
     # Create an instance of the API class
     api_instance = brawlstars.EventsApi(api_client)
 
     try:
         # Get event rotation
-        api_response = await api_instance.get_scheduled_events()
+        api_response = api_instance.get_scheduled_events()
         print("The response of EventsApi->get_scheduled_events:\n")
         pprint(api_response)
     except Exception as e:

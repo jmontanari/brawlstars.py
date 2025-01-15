@@ -43,14 +43,14 @@ configuration.api_key['JWT'] = os.environ["API_KEY"]
 # configuration.api_key_prefix['JWT'] = 'Bearer'
 
 # Enter a context with an instance of the API client
-async with brawlstars.ApiClient(configuration) as api_client:
+with brawlstars.ApiClient(configuration) as api_client:
     # Create an instance of the API class
     api_instance = brawlstars.BrawlersApi(api_client)
     brawler_id = 'brawler_id_example' # str | Identifier of the brawler.
 
     try:
         # Get information about a brawler.
-        api_response = await api_instance.get_brawler(brawler_id)
+        api_response = api_instance.get_brawler(brawler_id)
         print("The response of BrawlersApi->get_brawler:\n")
         pprint(api_response)
     except Exception as e:
@@ -128,7 +128,7 @@ configuration.api_key['JWT'] = os.environ["API_KEY"]
 # configuration.api_key_prefix['JWT'] = 'Bearer'
 
 # Enter a context with an instance of the API client
-async with brawlstars.ApiClient(configuration) as api_client:
+with brawlstars.ApiClient(configuration) as api_client:
     # Create an instance of the API class
     api_instance = brawlstars.BrawlersApi(api_client)
     before = 'before_example' # str | Return only items that occur before this marker. Before marker can be found from the response, inside the 'paging' property. Note that only after or before can be specified for a request, not both.  (optional)
@@ -137,7 +137,7 @@ async with brawlstars.ApiClient(configuration) as api_client:
 
     try:
         # Get list of available brawlers.
-        api_response = await api_instance.get_brawlers(before=before, after=after, limit=limit)
+        api_response = api_instance.get_brawlers(before=before, after=after, limit=limit)
         print("The response of BrawlersApi->get_brawlers:\n")
         pprint(api_response)
     except Exception as e:

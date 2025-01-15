@@ -25,7 +25,7 @@ class BrawlClient:
         self.configuration.api_key_prefix['JWT'] = 'Bearer'
         self.client = None
 
-    async def login(self, username: str, password: str):
+    def login(self, username: str, password: str):
         """Retrieves all keys and creates an HTTP connection ready for use.
 
         Parameters
@@ -42,9 +42,9 @@ class BrawlClient:
         self.configuration.password = password
 
         self.client = ApiClient(self.configuration)
-        await self.client.init_keys()
+        self.client.init_keys()
 
-    async def login_with_token(self, token: str) -> None:
+    def login_with_token(self, token: str) -> None:
         """Creates an HTTP connection ready for use with the tokens you provide.
 
         Parameters
@@ -55,46 +55,46 @@ class BrawlClient:
         self.configuration.api_key['JWT'] = token
         self.client = ApiClient(self.configuration)
 
-    async def get_brawlers(self) -> List[Brawler]:
-        response = await BrawlersApi(self.client).get_brawlers()
+    def get_brawlers(self) -> List[Brawler]:
+        response = BrawlersApi(self.client).get_brawlers()
         return response
 
-    async def get_brawler(self, brawler_id: str) -> Brawler:
-        response = await BrawlersApi(self.client).get_brawler(self.__to_annotated_str(brawler_id))
+    def get_brawler(self, brawler_id: str) -> Brawler:
+        response = BrawlersApi(self.client).get_brawler(self.__to_annotated_str(brawler_id))
         return response
 
-    async def get_club_members(self, club_tag: str) -> List[ClubMember]:
-        response = await ClubsApi(self.client).get_club_members(club_tag=self.__to_annotated_str(club_tag))
+    def get_club_members(self, club_tag: str) -> List[ClubMember]:
+        response = ClubsApi(self.client).get_club_members(club_tag=self.__to_annotated_str(club_tag))
         return response
 
-    async def get_club(self, club_tag: str) -> Club:
-        response = await ClubsApi(self.client).get_club(club_tag=self.__to_annotated_str(club_tag))
+    def get_club(self, club_tag: str) -> Club:
+        response = ClubsApi(self.client).get_club(club_tag=self.__to_annotated_str(club_tag))
         return response
 
-    async def get_scheduled_events(self) -> List[ScheduledEvent]:
-        response = await EventsApi(self.client).get_scheduled_events()
+    def get_scheduled_events(self) -> List[ScheduledEvent]:
+        response = EventsApi(self.client).get_scheduled_events()
         return response
 
-    async def get_battle_log(self, player_tag: str) -> List[Battle]:
-        response = await PlayersApi(self.client).get_battle_log(player_tag=self.__to_annotated_str(player_tag))
+    def get_battle_log(self, player_tag: str) -> List[Battle]:
+        response = PlayersApi(self.client).get_battle_log(player_tag=self.__to_annotated_str(player_tag))
         return response
 
-    async def get_player(self, player_tag: str) -> Player:
-        response = await PlayersApi(self.client).get_player(player_tag=self.__to_annotated_str(player_tag))
+    def get_player(self, player_tag: str) -> Player:
+        response = PlayersApi(self.client).get_player(player_tag=self.__to_annotated_str(player_tag))
         return response
 
-    async def get_brawler_rankings(self, brawler_id: str, country_code: str = "global") -> List[PlayerRanking]:
-        response = await RankingsApi(self.client).get_brawler_rankings(brawler_id=self.__to_annotated_str(brawler_id),
-                                                                       country_code=self.__to_annotated_str(
-                                                                           country_code))
+    def get_brawler_rankings(self, brawler_id: str, country_code: str = "global") -> List[PlayerRanking]:
+        response = RankingsApi(self.client).get_brawler_rankings(brawler_id=self.__to_annotated_str(brawler_id),
+                                                                 country_code=self.__to_annotated_str(
+                                                                     country_code))
         return response
 
-    async def get_club_rankings(self, country_code: str = "global") -> List[ClubRanking]:
-        response = await RankingsApi(self.client).get_club_rankings(client=self.client, country_code=country_code)
+    def get_club_rankings(self, country_code: str = "global") -> List[ClubRanking]:
+        response = RankingsApi(self.client).get_club_rankings(client=self.client, country_code=country_code)
         return response
 
-    async def get_player_rankings(self, country_code: str = "global") -> List[PlayerRanking]:
-        response = await RankingsApi(self.client).get_player_rankings(client=self.client, country_code=country_code)
+    def get_player_rankings(self, country_code: str = "global") -> List[PlayerRanking]:
+        response = RankingsApi(self.client).get_player_rankings(client=self.client, country_code=country_code)
         return response
 
     def __to_annotated_str(self, value: str) -> Annotated[StrictStr, Field(description="Identifier")]:

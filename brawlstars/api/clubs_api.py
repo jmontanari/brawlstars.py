@@ -41,7 +41,7 @@ class ClubsApi:
 
 
     @validate_call
-    async def get_club(
+    def get_club(
         self,
         club_tag: Annotated[StrictStr, Field(description="Tag of the club.")],
         _request_timeout: Union[
@@ -102,11 +102,11 @@ class ClubsApi:
             '503': "ClientError",
             '200': "Club",
         }
-        response_data = await self.api_client.call_api(
+        response_data = self.api_client.call_api(
             *_param,
             _request_timeout=_request_timeout
         )
-        await response_data.read()
+        response_data.read()
         return self.api_client.response_deserialize(
             response_data=response_data,
             response_types_map=_response_types_map,
@@ -114,7 +114,7 @@ class ClubsApi:
 
 
     @validate_call
-    async def get_club_with_http_info(
+    def get_club_with_http_info(
         self,
         club_tag: Annotated[StrictStr, Field(description="Tag of the club.")],
         _request_timeout: Union[
@@ -175,11 +175,11 @@ class ClubsApi:
             '503': "ClientError",
             '200': "Club",
         }
-        response_data = await self.api_client.call_api(
+        response_data = self.api_client.call_api(
             *_param,
             _request_timeout=_request_timeout
         )
-        await response_data.read()
+        response_data.read()
         return self.api_client.response_deserialize(
             response_data=response_data,
             response_types_map=_response_types_map,
@@ -187,7 +187,7 @@ class ClubsApi:
 
 
     @validate_call
-    async def get_club_without_preload_content(
+    def get_club_without_preload_content(
         self,
         club_tag: Annotated[StrictStr, Field(description="Tag of the club.")],
         _request_timeout: Union[
@@ -248,7 +248,7 @@ class ClubsApi:
             '503': "ClientError",
             '200': "Club",
         }
-        response_data = await self.api_client.call_api(
+        response_data = self.api_client.call_api(
             *_param,
             _request_timeout=_request_timeout
         )
@@ -320,7 +320,7 @@ class ClubsApi:
 
 
     @validate_call
-    async def get_club_members(
+    def get_club_members(
         self,
         club_tag: Annotated[StrictStr, Field(description="Tag of the club.")],
         before: Annotated[Optional[StrictStr], Field(description="Return only items that occur before this marker. Before marker can be found from the response, inside the 'paging' property. Note that only after or before can be specified for a request, not both. ")] = None,
@@ -393,11 +393,11 @@ class ClubsApi:
             '503': "ClientError",
             '200': "List[ClubMember]",
         }
-        response_data = await self.api_client.call_api(
+        response_data = self.api_client.call_api(
             *_param,
             _request_timeout=_request_timeout
         )
-        await response_data.read()
+        response_data.read()
         return self.api_client.response_deserialize(
             response_data=response_data,
             response_types_map=_response_types_map,
@@ -405,7 +405,7 @@ class ClubsApi:
 
 
     @validate_call
-    async def get_club_members_with_http_info(
+    def get_club_members_with_http_info(
         self,
         club_tag: Annotated[StrictStr, Field(description="Tag of the club.")],
         before: Annotated[Optional[StrictStr], Field(description="Return only items that occur before this marker. Before marker can be found from the response, inside the 'paging' property. Note that only after or before can be specified for a request, not both. ")] = None,
@@ -478,11 +478,11 @@ class ClubsApi:
             '503': "ClientError",
             '200': "List[ClubMember]",
         }
-        response_data = await self.api_client.call_api(
+        response_data = self.api_client.call_api(
             *_param,
             _request_timeout=_request_timeout
         )
-        await response_data.read()
+        response_data.read()
         return self.api_client.response_deserialize(
             response_data=response_data,
             response_types_map=_response_types_map,
@@ -490,7 +490,7 @@ class ClubsApi:
 
 
     @validate_call
-    async def get_club_members_without_preload_content(
+    def get_club_members_without_preload_content(
         self,
         club_tag: Annotated[StrictStr, Field(description="Tag of the club.")],
         before: Annotated[Optional[StrictStr], Field(description="Return only items that occur before this marker. Before marker can be found from the response, inside the 'paging' property. Note that only after or before can be specified for a request, not both. ")] = None,
@@ -563,7 +563,7 @@ class ClubsApi:
             '503': "ClientError",
             '200': "List[ClubMember]",
         }
-        response_data = await self.api_client.call_api(
+        response_data = self.api_client.call_api(
             *_param,
             _request_timeout=_request_timeout
         )

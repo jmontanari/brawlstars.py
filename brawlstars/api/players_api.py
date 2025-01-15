@@ -41,7 +41,7 @@ class PlayersApi:
 
 
     @validate_call
-    async def get_battle_log(
+    def get_battle_log(
         self,
         player_tag: Annotated[StrictStr, Field(description="Tag of the player.")],
         _request_timeout: Union[
@@ -102,11 +102,11 @@ class PlayersApi:
             '503': "ClientError",
             '200': "List[Battle]",
         }
-        response_data = await self.api_client.call_api(
+        response_data = self.api_client.call_api(
             *_param,
             _request_timeout=_request_timeout
         )
-        await response_data.read()
+        response_data.read()
         return self.api_client.response_deserialize(
             response_data=response_data,
             response_types_map=_response_types_map,
@@ -114,7 +114,7 @@ class PlayersApi:
 
 
     @validate_call
-    async def get_battle_log_with_http_info(
+    def get_battle_log_with_http_info(
         self,
         player_tag: Annotated[StrictStr, Field(description="Tag of the player.")],
         _request_timeout: Union[
@@ -175,11 +175,11 @@ class PlayersApi:
             '503': "ClientError",
             '200': "List[Battle]",
         }
-        response_data = await self.api_client.call_api(
+        response_data = self.api_client.call_api(
             *_param,
             _request_timeout=_request_timeout
         )
-        await response_data.read()
+        response_data.read()
         return self.api_client.response_deserialize(
             response_data=response_data,
             response_types_map=_response_types_map,
@@ -187,7 +187,7 @@ class PlayersApi:
 
 
     @validate_call
-    async def get_battle_log_without_preload_content(
+    def get_battle_log_without_preload_content(
         self,
         player_tag: Annotated[StrictStr, Field(description="Tag of the player.")],
         _request_timeout: Union[
@@ -248,7 +248,7 @@ class PlayersApi:
             '503': "ClientError",
             '200': "List[Battle]",
         }
-        response_data = await self.api_client.call_api(
+        response_data = self.api_client.call_api(
             *_param,
             _request_timeout=_request_timeout
         )
@@ -320,7 +320,7 @@ class PlayersApi:
 
 
     @validate_call
-    async def get_player(
+    def get_player(
         self,
         player_tag: Annotated[StrictStr, Field(description="Tag of the player.")],
         _request_timeout: Union[
@@ -381,11 +381,11 @@ class PlayersApi:
             '503': "ClientError",
             '200': "Player",
         }
-        response_data = await self.api_client.call_api(
+        response_data = self.api_client.call_api(
             *_param,
             _request_timeout=_request_timeout
         )
-        await response_data.read()
+        response_data.read()
         return self.api_client.response_deserialize(
             response_data=response_data,
             response_types_map=_response_types_map,
@@ -393,7 +393,7 @@ class PlayersApi:
 
 
     @validate_call
-    async def get_player_with_http_info(
+    def get_player_with_http_info(
         self,
         player_tag: Annotated[StrictStr, Field(description="Tag of the player.")],
         _request_timeout: Union[
@@ -454,11 +454,11 @@ class PlayersApi:
             '503': "ClientError",
             '200': "Player",
         }
-        response_data = await self.api_client.call_api(
+        response_data = self.api_client.call_api(
             *_param,
             _request_timeout=_request_timeout
         )
-        await response_data.read()
+        response_data.read()
         return self.api_client.response_deserialize(
             response_data=response_data,
             response_types_map=_response_types_map,
@@ -466,7 +466,7 @@ class PlayersApi:
 
 
     @validate_call
-    async def get_player_without_preload_content(
+    def get_player_without_preload_content(
         self,
         player_tag: Annotated[StrictStr, Field(description="Tag of the player.")],
         _request_timeout: Union[
@@ -527,7 +527,7 @@ class PlayersApi:
             '503': "ClientError",
             '200': "Player",
         }
-        response_data = await self.api_client.call_api(
+        response_data = self.api_client.call_api(
             *_param,
             _request_timeout=_request_timeout
         )

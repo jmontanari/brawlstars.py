@@ -41,7 +41,7 @@ class RankingsApi:
 
 
     @validate_call
-    async def get_brawler_rankings(
+    def get_brawler_rankings(
         self,
         country_code: Annotated[StrictStr, Field(description="Two letter country code, or 'global' for global rankings.")],
         brawler_id: Annotated[StrictStr, Field(description="Identifier of the brawler.")],
@@ -118,11 +118,11 @@ class RankingsApi:
             '503': "ClientError",
             '200': "List[PlayerRanking]",
         }
-        response_data = await self.api_client.call_api(
+        response_data = self.api_client.call_api(
             *_param,
             _request_timeout=_request_timeout
         )
-        await response_data.read()
+        response_data.read()
         return self.api_client.response_deserialize(
             response_data=response_data,
             response_types_map=_response_types_map,
@@ -130,7 +130,7 @@ class RankingsApi:
 
 
     @validate_call
-    async def get_brawler_rankings_with_http_info(
+    def get_brawler_rankings_with_http_info(
         self,
         country_code: Annotated[StrictStr, Field(description="Two letter country code, or 'global' for global rankings.")],
         brawler_id: Annotated[StrictStr, Field(description="Identifier of the brawler.")],
@@ -207,11 +207,11 @@ class RankingsApi:
             '503': "ClientError",
             '200': "List[PlayerRanking]",
         }
-        response_data = await self.api_client.call_api(
+        response_data = self.api_client.call_api(
             *_param,
             _request_timeout=_request_timeout
         )
-        await response_data.read()
+        response_data.read()
         return self.api_client.response_deserialize(
             response_data=response_data,
             response_types_map=_response_types_map,
@@ -219,7 +219,7 @@ class RankingsApi:
 
 
     @validate_call
-    async def get_brawler_rankings_without_preload_content(
+    def get_brawler_rankings_without_preload_content(
         self,
         country_code: Annotated[StrictStr, Field(description="Two letter country code, or 'global' for global rankings.")],
         brawler_id: Annotated[StrictStr, Field(description="Identifier of the brawler.")],
@@ -296,7 +296,7 @@ class RankingsApi:
             '503': "ClientError",
             '200': "List[PlayerRanking]",
         }
-        response_data = await self.api_client.call_api(
+        response_data = self.api_client.call_api(
             *_param,
             _request_timeout=_request_timeout
         )
@@ -386,7 +386,7 @@ class RankingsApi:
 
 
     @validate_call
-    async def get_club_rankings(
+    def get_club_rankings(
         self,
         country_code: Annotated[StrictStr, Field(description="Two letter country code, or 'global' for global rankings.")],
         before: Annotated[Optional[StrictStr], Field(description="Return only items that occur before this marker. Before marker can be found from the response, inside the 'paging' property. Note that only after or before can be specified for a request, not both. ")] = None,
@@ -459,11 +459,11 @@ class RankingsApi:
             '503': "ClientError",
             '200': "List[ClubRanking]",
         }
-        response_data = await self.api_client.call_api(
+        response_data = self.api_client.call_api(
             *_param,
             _request_timeout=_request_timeout
         )
-        await response_data.read()
+        response_data.read()
         return self.api_client.response_deserialize(
             response_data=response_data,
             response_types_map=_response_types_map,
@@ -471,7 +471,7 @@ class RankingsApi:
 
 
     @validate_call
-    async def get_club_rankings_with_http_info(
+    def get_club_rankings_with_http_info(
         self,
         country_code: Annotated[StrictStr, Field(description="Two letter country code, or 'global' for global rankings.")],
         before: Annotated[Optional[StrictStr], Field(description="Return only items that occur before this marker. Before marker can be found from the response, inside the 'paging' property. Note that only after or before can be specified for a request, not both. ")] = None,
@@ -544,11 +544,11 @@ class RankingsApi:
             '503': "ClientError",
             '200': "List[ClubRanking]",
         }
-        response_data = await self.api_client.call_api(
+        response_data = self.api_client.call_api(
             *_param,
             _request_timeout=_request_timeout
         )
-        await response_data.read()
+        response_data.read()
         return self.api_client.response_deserialize(
             response_data=response_data,
             response_types_map=_response_types_map,
@@ -556,7 +556,7 @@ class RankingsApi:
 
 
     @validate_call
-    async def get_club_rankings_without_preload_content(
+    def get_club_rankings_without_preload_content(
         self,
         country_code: Annotated[StrictStr, Field(description="Two letter country code, or 'global' for global rankings.")],
         before: Annotated[Optional[StrictStr], Field(description="Return only items that occur before this marker. Before marker can be found from the response, inside the 'paging' property. Note that only after or before can be specified for a request, not both. ")] = None,
@@ -629,7 +629,7 @@ class RankingsApi:
             '503': "ClientError",
             '200': "List[ClubRanking]",
         }
-        response_data = await self.api_client.call_api(
+        response_data = self.api_client.call_api(
             *_param,
             _request_timeout=_request_timeout
         )
@@ -716,7 +716,7 @@ class RankingsApi:
 
 
     @validate_call
-    async def get_player_rankings(
+    def get_player_rankings(
         self,
         country_code: Annotated[StrictStr, Field(description="Two letter country code, or 'global' for global rankings.")],
         before: Annotated[Optional[StrictStr], Field(description="Return only items that occur before this marker. Before marker can be found from the response, inside the 'paging' property. Note that only after or before can be specified for a request, not both. ")] = None,
@@ -789,11 +789,11 @@ class RankingsApi:
             '503': "ClientError",
             '200': "List[PlayerRanking]",
         }
-        response_data = await self.api_client.call_api(
+        response_data = self.api_client.call_api(
             *_param,
             _request_timeout=_request_timeout
         )
-        await response_data.read()
+        response_data.read()
         return self.api_client.response_deserialize(
             response_data=response_data,
             response_types_map=_response_types_map,
@@ -801,7 +801,7 @@ class RankingsApi:
 
 
     @validate_call
-    async def get_player_rankings_with_http_info(
+    def get_player_rankings_with_http_info(
         self,
         country_code: Annotated[StrictStr, Field(description="Two letter country code, or 'global' for global rankings.")],
         before: Annotated[Optional[StrictStr], Field(description="Return only items that occur before this marker. Before marker can be found from the response, inside the 'paging' property. Note that only after or before can be specified for a request, not both. ")] = None,
@@ -874,11 +874,11 @@ class RankingsApi:
             '503': "ClientError",
             '200': "List[PlayerRanking]",
         }
-        response_data = await self.api_client.call_api(
+        response_data = self.api_client.call_api(
             *_param,
             _request_timeout=_request_timeout
         )
-        await response_data.read()
+        response_data.read()
         return self.api_client.response_deserialize(
             response_data=response_data,
             response_types_map=_response_types_map,
@@ -886,7 +886,7 @@ class RankingsApi:
 
 
     @validate_call
-    async def get_player_rankings_without_preload_content(
+    def get_player_rankings_without_preload_content(
         self,
         country_code: Annotated[StrictStr, Field(description="Two letter country code, or 'global' for global rankings.")],
         before: Annotated[Optional[StrictStr], Field(description="Return only items that occur before this marker. Before marker can be found from the response, inside the 'paging' property. Note that only after or before can be specified for a request, not both. ")] = None,
@@ -959,7 +959,7 @@ class RankingsApi:
             '503': "ClientError",
             '200': "List[PlayerRanking]",
         }
-        response_data = await self.api_client.call_api(
+        response_data = self.api_client.call_api(
             *_param,
             _request_timeout=_request_timeout
         )

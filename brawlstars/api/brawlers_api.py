@@ -40,7 +40,7 @@ class BrawlersApi:
 
 
     @validate_call
-    async def get_brawler(
+    def get_brawler(
         self,
         brawler_id: Annotated[StrictStr, Field(description="Identifier of the brawler.")],
         _request_timeout: Union[
@@ -101,11 +101,11 @@ class BrawlersApi:
             '503': "ClientError",
             '200': "Brawler",
         }
-        response_data = await self.api_client.call_api(
+        response_data = self.api_client.call_api(
             *_param,
             _request_timeout=_request_timeout
         )
-        await response_data.read()
+        response_data.read()
         return self.api_client.response_deserialize(
             response_data=response_data,
             response_types_map=_response_types_map,
@@ -113,7 +113,7 @@ class BrawlersApi:
 
 
     @validate_call
-    async def get_brawler_with_http_info(
+    def get_brawler_with_http_info(
         self,
         brawler_id: Annotated[StrictStr, Field(description="Identifier of the brawler.")],
         _request_timeout: Union[
@@ -174,11 +174,11 @@ class BrawlersApi:
             '503': "ClientError",
             '200': "Brawler",
         }
-        response_data = await self.api_client.call_api(
+        response_data = self.api_client.call_api(
             *_param,
             _request_timeout=_request_timeout
         )
-        await response_data.read()
+        response_data.read()
         return self.api_client.response_deserialize(
             response_data=response_data,
             response_types_map=_response_types_map,
@@ -186,7 +186,7 @@ class BrawlersApi:
 
 
     @validate_call
-    async def get_brawler_without_preload_content(
+    def get_brawler_without_preload_content(
         self,
         brawler_id: Annotated[StrictStr, Field(description="Identifier of the brawler.")],
         _request_timeout: Union[
@@ -247,7 +247,7 @@ class BrawlersApi:
             '503': "ClientError",
             '200': "Brawler",
         }
-        response_data = await self.api_client.call_api(
+        response_data = self.api_client.call_api(
             *_param,
             _request_timeout=_request_timeout
         )
@@ -319,7 +319,7 @@ class BrawlersApi:
 
 
     @validate_call
-    async def get_brawlers(
+    def get_brawlers(
         self,
         before: Annotated[Optional[StrictStr], Field(description="Return only items that occur before this marker. Before marker can be found from the response, inside the 'paging' property. Note that only after or before can be specified for a request, not both. ")] = None,
         after: Annotated[Optional[StrictStr], Field(description="Return only items that occur after this marker. Before marker can be found from the response, inside the 'paging' property. Note that only after or before can be specified for a request, not both. ")] = None,
@@ -388,11 +388,11 @@ class BrawlersApi:
             '503': "ClientError",
             '200': "List[Brawler]",
         }
-        response_data = await self.api_client.call_api(
+        response_data = self.api_client.call_api(
             *_param,
             _request_timeout=_request_timeout
         )
-        await response_data.read()
+        response_data.read()
         return self.api_client.response_deserialize(
             response_data=response_data,
             response_types_map=_response_types_map,
@@ -400,7 +400,7 @@ class BrawlersApi:
 
 
     @validate_call
-    async def get_brawlers_with_http_info(
+    def get_brawlers_with_http_info(
         self,
         before: Annotated[Optional[StrictStr], Field(description="Return only items that occur before this marker. Before marker can be found from the response, inside the 'paging' property. Note that only after or before can be specified for a request, not both. ")] = None,
         after: Annotated[Optional[StrictStr], Field(description="Return only items that occur after this marker. Before marker can be found from the response, inside the 'paging' property. Note that only after or before can be specified for a request, not both. ")] = None,
@@ -469,11 +469,11 @@ class BrawlersApi:
             '503': "ClientError",
             '200': "List[Brawler]",
         }
-        response_data = await self.api_client.call_api(
+        response_data = self.api_client.call_api(
             *_param,
             _request_timeout=_request_timeout
         )
-        await response_data.read()
+        response_data.read()
         return self.api_client.response_deserialize(
             response_data=response_data,
             response_types_map=_response_types_map,
@@ -481,7 +481,7 @@ class BrawlersApi:
 
 
     @validate_call
-    async def get_brawlers_without_preload_content(
+    def get_brawlers_without_preload_content(
         self,
         before: Annotated[Optional[StrictStr], Field(description="Return only items that occur before this marker. Before marker can be found from the response, inside the 'paging' property. Note that only after or before can be specified for a request, not both. ")] = None,
         after: Annotated[Optional[StrictStr], Field(description="Return only items that occur after this marker. Before marker can be found from the response, inside the 'paging' property. Note that only after or before can be specified for a request, not both. ")] = None,
@@ -550,7 +550,7 @@ class BrawlersApi:
             '503': "ClientError",
             '200': "List[Brawler]",
         }
-        response_data = await self.api_client.call_api(
+        response_data = self.api_client.call_api(
             *_param,
             _request_timeout=_request_timeout
         )

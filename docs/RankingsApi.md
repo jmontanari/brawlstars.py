@@ -44,7 +44,7 @@ configuration.api_key['JWT'] = os.environ["API_KEY"]
 # configuration.api_key_prefix['JWT'] = 'Bearer'
 
 # Enter a context with an instance of the API client
-async with brawlstars.ApiClient(configuration) as api_client:
+with brawlstars.ApiClient(configuration) as api_client:
     # Create an instance of the API class
     api_instance = brawlstars.RankingsApi(api_client)
     country_code = 'country_code_example' # str | Two letter country code, or 'global' for global rankings.
@@ -55,7 +55,7 @@ async with brawlstars.ApiClient(configuration) as api_client:
 
     try:
         # Get brawler rankings for a country or global rankings.
-        api_response = await api_instance.get_brawler_rankings(country_code, brawler_id, before=before, after=after, limit=limit)
+        api_response = api_instance.get_brawler_rankings(country_code, brawler_id, before=before, after=after, limit=limit)
         print("The response of RankingsApi->get_brawler_rankings:\n")
         pprint(api_response)
     except Exception as e:
@@ -137,7 +137,7 @@ configuration.api_key['JWT'] = os.environ["API_KEY"]
 # configuration.api_key_prefix['JWT'] = 'Bearer'
 
 # Enter a context with an instance of the API client
-async with brawlstars.ApiClient(configuration) as api_client:
+with brawlstars.ApiClient(configuration) as api_client:
     # Create an instance of the API class
     api_instance = brawlstars.RankingsApi(api_client)
     country_code = 'country_code_example' # str | Two letter country code, or 'global' for global rankings.
@@ -147,7 +147,7 @@ async with brawlstars.ApiClient(configuration) as api_client:
 
     try:
         # Get club rankings for a country or global rankings.
-        api_response = await api_instance.get_club_rankings(country_code, before=before, after=after, limit=limit)
+        api_response = api_instance.get_club_rankings(country_code, before=before, after=after, limit=limit)
         print("The response of RankingsApi->get_club_rankings:\n")
         pprint(api_response)
     except Exception as e:
@@ -228,7 +228,7 @@ configuration.api_key['JWT'] = os.environ["API_KEY"]
 # configuration.api_key_prefix['JWT'] = 'Bearer'
 
 # Enter a context with an instance of the API client
-async with brawlstars.ApiClient(configuration) as api_client:
+with brawlstars.ApiClient(configuration) as api_client:
     # Create an instance of the API class
     api_instance = brawlstars.RankingsApi(api_client)
     country_code = 'country_code_example' # str | Two letter country code, or 'global' for global rankings.
@@ -238,7 +238,7 @@ async with brawlstars.ApiClient(configuration) as api_client:
 
     try:
         # Get player rankings for a country or global rankings.
-        api_response = await api_instance.get_player_rankings(country_code, before=before, after=after, limit=limit)
+        api_response = api_instance.get_player_rankings(country_code, before=before, after=after, limit=limit)
         print("The response of RankingsApi->get_player_rankings:\n")
         pprint(api_response)
     except Exception as e:

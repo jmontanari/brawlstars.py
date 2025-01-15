@@ -43,14 +43,14 @@ configuration.api_key['JWT'] = os.environ["API_KEY"]
 # configuration.api_key_prefix['JWT'] = 'Bearer'
 
 # Enter a context with an instance of the API client
-async with brawlstars.ApiClient(configuration) as api_client:
+with brawlstars.ApiClient(configuration) as api_client:
     # Create an instance of the API class
     api_instance = brawlstars.PlayersApi(api_client)
     player_tag = 'player_tag_example' # str | Tag of the player.
 
     try:
         # Get log of recent battles for a player.
-        api_response = await api_instance.get_battle_log(player_tag)
+        api_response = api_instance.get_battle_log(player_tag)
         print("The response of PlayersApi->get_battle_log:\n")
         pprint(api_response)
     except Exception as e:
@@ -128,14 +128,14 @@ configuration.api_key['JWT'] = os.environ["API_KEY"]
 # configuration.api_key_prefix['JWT'] = 'Bearer'
 
 # Enter a context with an instance of the API client
-async with brawlstars.ApiClient(configuration) as api_client:
+with brawlstars.ApiClient(configuration) as api_client:
     # Create an instance of the API class
     api_instance = brawlstars.PlayersApi(api_client)
     player_tag = 'player_tag_example' # str | Tag of the player.
 
     try:
         # Get player information
-        api_response = await api_instance.get_player(player_tag)
+        api_response = api_instance.get_player(player_tag)
         print("The response of PlayersApi->get_player:\n")
         pprint(api_response)
     except Exception as e:

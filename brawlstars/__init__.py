@@ -13,7 +13,8 @@
     Do not edit the class manually.
 """  # noqa: E501
 
-__version__ = "1.1.0"
+
+__version__ = "1.2.0"
 
 # import apis into sdk package
 from brawlstars.api.brawlers_api import BrawlersApi
@@ -21,16 +22,18 @@ from brawlstars.api.clubs_api import ClubsApi
 from brawlstars.api.events_api import EventsApi
 from brawlstars.api.players_api import PlayersApi
 from brawlstars.api.rankings_api import RankingsApi
-from brawlstars.api_client import ApiClient
+
 # import ApiClient
 from brawlstars.api_response import ApiResponse
+from brawlstars.api_client import ApiClient
 from brawlstars.configuration import Configuration
-from brawlstars.exceptions import ApiAttributeError
-from brawlstars.exceptions import ApiException
-from brawlstars.exceptions import ApiKeyError
+from brawlstars.exceptions import OpenApiException
 from brawlstars.exceptions import ApiTypeError
 from brawlstars.exceptions import ApiValueError
-from brawlstars.exceptions import OpenApiException
+from brawlstars.exceptions import ApiKeyError
+from brawlstars.exceptions import ApiAttributeError
+from brawlstars.exceptions import ApiException
+
 # import models into sdk package
 from brawlstars.models.accessory import Accessory
 from brawlstars.models.banned_brawler_entry import BannedBrawlerEntry

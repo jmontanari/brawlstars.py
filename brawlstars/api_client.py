@@ -65,7 +65,6 @@ class ApiClient:
         'decimal': decimal.Decimal,
         'object': object,
     }
-
     _pool = None
 
     def __init__(
@@ -86,21 +85,18 @@ class ApiClient:
             self.default_headers[header_name] = header_value
         self.cookie = cookie
         # Set default User-Agent.
-        self.user_agent = 'OpenAPI-Generator/1.0.0/python'
+        self.user_agent = 'OpenAPI-Generator/1.1.0/python'
         self.client_side_validation = configuration.client_side_validation
 
-    async def init_keys(self):
-        await self.rest_client.initialise_keys()
-        self.configuration.api_key['JWT'] = next(self.configuration.keys)
-
-    async def __aenter__(self):
+    def __enter__(self):
         return self
 
-    async def __aexit__(self, exc_type, exc_value, traceback):
-        await self.close()
+    def __exit__(self, exc_type, exc_value, traceback):
+        pass
 
-    async def close(self):
-        await self.rest_client.close()
+    def init_keys(self):
+        self.rest_client.initialise_keys()
+        self.configuration.api_key['JWT'] = next(self.configuration.keys)
 
     @property
     def user_agent(self):
@@ -248,7 +244,7 @@ class ApiClient:
 
         return method, url, header_params, body, post_params
 
-    async def call_api(
+    def call_api(
             self,
             method,
             url,
@@ -271,7 +267,7 @@ class ApiClient:
 
         try:
             # perform request and return response
-            response_data = await self.rest_client.request(
+            response_data = self.rest_client.request(
                 method, url,
                 headers=header_params,
                 body=body, post_params=post_params,
@@ -436,20 +432,8 @@ class ApiClient:
                 m = re.match(r'List\[(.*)]', klass)
                 assert m is not None, "Malformed List type definition"
                 sub_kls = m.group(1)
-                try:
-                    if isinstance(data, Dict):
-                        response = [self.__deserialize(item, sub_kls) for item in
-                                    data["items"]]
-                        return response
-                    if isinstance(data, List):
-                        response = [self.__deserialize(item, sub_kls) for item in
-                                    data]
-                        return response
-                    else:
-                        response = self.__deserialize(data, sub_kls)
-                        return response
-                except Exception as e:
-                    print(e)
+                return [self.__deserialize(sub_data, sub_kls)
+                        for sub_data in data]
 
             if klass.startswith('Dict['):
                 m = re.match(r'Dict\[([^,]*), (.*)]', klass)

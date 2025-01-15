@@ -43,14 +43,14 @@ configuration.api_key['JWT'] = os.environ["API_KEY"]
 # configuration.api_key_prefix['JWT'] = 'Bearer'
 
 # Enter a context with an instance of the API client
-async with brawlstars.ApiClient(configuration) as api_client:
+with brawlstars.ApiClient(configuration) as api_client:
     # Create an instance of the API class
     api_instance = brawlstars.ClubsApi(api_client)
     club_tag = 'club_tag_example' # str | Tag of the club.
 
     try:
         # Get club information.
-        api_response = await api_instance.get_club(club_tag)
+        api_response = api_instance.get_club(club_tag)
         print("The response of ClubsApi->get_club:\n")
         pprint(api_response)
     except Exception as e:
@@ -128,7 +128,7 @@ configuration.api_key['JWT'] = os.environ["API_KEY"]
 # configuration.api_key_prefix['JWT'] = 'Bearer'
 
 # Enter a context with an instance of the API client
-async with brawlstars.ApiClient(configuration) as api_client:
+with brawlstars.ApiClient(configuration) as api_client:
     # Create an instance of the API class
     api_instance = brawlstars.ClubsApi(api_client)
     club_tag = 'club_tag_example' # str | Tag of the club.
@@ -138,7 +138,7 @@ async with brawlstars.ApiClient(configuration) as api_client:
 
     try:
         # List club members.
-        api_response = await api_instance.get_club_members(club_tag, before=before, after=after, limit=limit)
+        api_response = api_instance.get_club_members(club_tag, before=before, after=after, limit=limit)
         print("The response of ClubsApi->get_club_members:\n")
         pprint(api_response)
     except Exception as e:

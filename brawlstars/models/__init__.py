@@ -12,6 +12,7 @@
     Do not edit the class manually.
 """  # noqa: E501
 
+
 # import models into model package
 from brawlstars.models.accessory import Accessory
 from brawlstars.models.banned_brawler_entry import BannedBrawlerEntry
