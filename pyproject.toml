@@ -1,19 +1,21 @@
 [tool.poetry]
-name = "brawlstars.py"
-version = "1.0.6"
+name = "brawlstars"
+version = "1.1.0"
 description = "Brawl Stars API"
 authors = ["OpenAPI Generator Community <team@openapitools.org>"]
 license = "NoLicense"
 readme = "README.md"
-repository = "https://github.com/jmontanari/brawlstars.py"
+repository = "https://github.com/GIT_USER_ID/GIT_REPO_ID"
 keywords = ["OpenAPI", "OpenAPI-Generator", "Brawl Stars API"]
-include = ["brawlstars.generated/py.typed"]
+include = ["brawlstars/py.typed"]
 
 [tool.poetry.dependencies]
 python = "^3.8"
 
 urllib3 = ">= 1.25.3 < 3.0.0"
 python-dateutil = ">= 2.8.2"
+aiohttp = ">= 3.8.4"
+aiohttp-retry = ">= 2.8.3"
 pydantic = ">= 2"
 typing-extensions = ">= 4.7.1"
 
@@ -35,9 +37,9 @@ extension-pkg-whitelist = "pydantic"
 
 [tool.mypy]
 files = [
-    "brawlstars.generated",
-    #"test",  # auto-generated tests
-    "tests", # hand-written tests
+  "brawlstars",
+  #"test",  # auto-generated tests
+  "tests", # hand-written tests
 ]
 # TODO: enable "strict" once all these individual checks are passing
 # strict = true
@@ -73,7 +75,7 @@ disallow_any_generics = true
 
 [[tool.mypy.overrides]]
 module = [
-    "brawlstars.generated.configuration",
+  "brawlstars.configuration",
 ]
 warn_unused_ignores = true
 strict_equality = true

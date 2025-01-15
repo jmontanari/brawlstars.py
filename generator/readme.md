@@ -2,8 +2,9 @@
 - Download the latest swagger doclet from brawlstars. Run download_swagger.py
 
 - To generate Clients
-  download latest swagger-codegen jar
-  from https://mvnrepository.com/artifact/io.swagger/swagger-codegen-cli/latest
-  ```
-  java -jar swagger-codegen-cli-2.4.44.jar generate -l python  -i swagger.yaml -o ../ --additional-properties packageName=brawlstars -l python
-- ```
+  download latest openapi-generator-cli jar
+  from https://mvnrepository.com/artifact/org.openapitools/openapi-generator-cli/latest
+
+```
+java -jar openapi-generator-cli-7.10.0.jar generate -i swagger.yaml -g python --package-name brawlstars --skip-validate-spec --global-property modelTests=false --global-property apiTests=false --library asyncio -o ../ --additional-properties packageVersion=1.1.0,projectName=brawlstars.py
+```

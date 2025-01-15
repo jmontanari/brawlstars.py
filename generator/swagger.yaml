@@ -113,7 +113,7 @@ definitions:
       id:
         type: integer
   JsonLocalizedName:
-    type: object
+    type: string
   AccessoryList:
     type: array
     items:

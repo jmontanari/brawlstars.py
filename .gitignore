@@ -76,3 +76,4 @@ tests/
 .openapi-generator/
 .swagger-codegen/
 test/
+.github/
