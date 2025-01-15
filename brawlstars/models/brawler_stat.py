@@ -11,24 +11,26 @@
     Do not edit the class manually.
 """  # noqa: E501
 
-
 from __future__ import annotations
+
+import json
 import pprint
 import re  # noqa: F401
-import json
+from typing import Any, ClassVar, Dict, List
+from typing import Optional, Set
 
 from pydantic import BaseModel, ConfigDict, Field, StrictInt, StrictStr
-from typing import Any, ClassVar, Dict, List, Optional
+from typing_extensions import Self
+
 from brawlstars.models.accessory import Accessory
 from brawlstars.models.gear_stat import GearStat
 from brawlstars.models.star_power import StarPower
-from typing import Optional, Set
-from typing_extensions import Self
+
 
 class BrawlerStat(BaseModel):
     """
     BrawlerStat
-    """ # noqa: E501
+    """  # noqa: E501
     gadgets: Optional[List[Accessory]] = None
     star_powers: Optional[List[StarPower]] = Field(default=None, alias="starPowers")
     id: Optional[StrictInt] = None
@@ -38,7 +40,8 @@ class BrawlerStat(BaseModel):
     power: Optional[StrictInt] = None
     gears: Optional[List[GearStat]] = None
     name: Optional[StrictStr] = None
-    __properties: ClassVar[List[str]] = ["gadgets", "starPowers", "id", "rank", "trophies", "highestTrophies", "power", "gears", "name"]
+    __properties: ClassVar[List[str]] = ["gadgets", "starPowers", "id", "rank", "trophies", "highestTrophies", "power",
+                                         "gears", "name"]
 
     model_config = ConfigDict(
         populate_by_name=True,
@@ -46,6 +49,9 @@ class BrawlerStat(BaseModel):
         protected_namespaces=(),
     )
 
+    def __lt__(self, other):
+        # Compare based on trophies
+        return self.trophies < other.trophies
 
     def to_str(self) -> str:
         """Returns the string representation of the model using alias"""
@@ -112,8 +118,10 @@ class BrawlerStat(BaseModel):
             return cls.model_validate(obj)
 
         _obj = cls.model_validate({
-            "gadgets": [Accessory.from_dict(_item) for _item in obj["gadgets"]] if obj.get("gadgets") is not None else None,
-            "starPowers": [StarPower.from_dict(_item) for _item in obj["starPowers"]] if obj.get("starPowers") is not None else None,
+            "gadgets": [Accessory.from_dict(_item) for _item in obj["gadgets"]] if obj.get(
+                "gadgets") is not None else None,
+            "starPowers": [StarPower.from_dict(_item) for _item in obj["starPowers"]] if obj.get(
+                "starPowers") is not None else None,
             "id": obj.get("id"),
             "rank": obj.get("rank"),
             "trophies": obj.get("trophies"),
@@ -123,5 +131,3 @@ class BrawlerStat(BaseModel):
             "name": obj.get("name")
         })
         return _obj
-
-
