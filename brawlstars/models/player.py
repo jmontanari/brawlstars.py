@@ -11,27 +11,30 @@
     Do not edit the class manually.
 """  # noqa: E501
 
-
 from __future__ import annotations
+
+import json
 import pprint
 import re  # noqa: F401
-import json
+from typing import Any, ClassVar, Dict, List
+from typing import Optional, Set
 
 from pydantic import BaseModel, ConfigDict, Field, StrictBool, StrictInt, StrictStr
-from typing import Any, ClassVar, Dict, List, Optional
+from typing_extensions import Self
+
 from brawlstars.models.brawler_stat import BrawlerStat
 from brawlstars.models.player_club import PlayerClub
 from brawlstars.models.player_icon import PlayerIcon
-from typing import Optional, Set
-from typing_extensions import Self
+
 
 class Player(BaseModel):
     """
     Player
-    """ # noqa: E501
+    """  # noqa: E501
     club: Optional[PlayerClub] = None
-    is_qualified_from_championship_challenge: Optional[StrictBool] = Field(default=None, alias="isQualifiedFromChampionshipChallenge")
-    var_3vs3_victories: Optional[StrictInt] = Field(default=None, alias="3vs3Victories")
+    is_qualified_from_championship_challenge: Optional[StrictBool] = Field(default=None,
+                                                                           alias="isQualifiedFromChampionshipChallenge")
+    trio_victories: Optional[StrictInt] = Field(default=None, alias="3vs3Victories")
     icon: Optional[PlayerIcon] = None
     tag: Optional[StrictStr] = None
     name: Optional[StrictStr] = None
@@ -45,14 +48,16 @@ class Player(BaseModel):
     best_time_as_big_brawler: Optional[StrictInt] = Field(default=None, alias="bestTimeAsBigBrawler")
     brawlers: Optional[List[BrawlerStat]] = None
     name_color: Optional[StrictStr] = Field(default=None, alias="nameColor")
-    __properties: ClassVar[List[str]] = ["club", "isQualifiedFromChampionshipChallenge", "3vs3Victories", "icon", "tag", "name", "trophies", "expLevel", "expPoints", "highestTrophies", "soloVictories", "duoVictories", "bestRoboRumbleTime", "bestTimeAsBigBrawler", "brawlers", "nameColor"]
+    __properties: ClassVar[List[str]] = ["club", "isQualifiedFromChampionshipChallenge", "3vs3Victories", "icon", "tag",
+                                         "name", "trophies", "expLevel", "expPoints", "highestTrophies",
+                                         "soloVictories", "duoVictories", "bestRoboRumbleTime", "bestTimeAsBigBrawler",
+                                         "brawlers", "nameColor"]
 
     model_config = ConfigDict(
         populate_by_name=True,
         validate_assignment=True,
         protected_namespaces=(),
     )
-
 
     def to_str(self) -> str:
         """Returns the string representation of the model using alias"""
@@ -125,9 +130,8 @@ class Player(BaseModel):
             "duoVictories": obj.get("duoVictories"),
             "bestRoboRumbleTime": obj.get("bestRoboRumbleTime"),
             "bestTimeAsBigBrawler": obj.get("bestTimeAsBigBrawler"),
-            "brawlers": [BrawlerStat.from_dict(_item) for _item in obj["brawlers"]] if obj.get("brawlers") is not None else None,
+            "brawlers": [BrawlerStat.from_dict(_item) for _item in obj["brawlers"]] if obj.get(
+                "brawlers") is not None else None,
             "nameColor": obj.get("nameColor")
         })
         return _obj
-
-
