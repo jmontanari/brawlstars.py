@@ -13,8 +13,12 @@
     Do not edit the class manually.
 """  # noqa: E501
 
+from importlib.metadata import version, PackageNotFoundError
 
-__version__ = "1.2.0"
+try:
+    __version__ = version("brawlstars")
+except PackageNotFoundError:
+    __version__ = "0.0.0"  # Development fallback
 
 # import apis into sdk package
 from brawlstars.api.brawlers_api import BrawlersApi
@@ -33,6 +37,12 @@ from brawlstars.exceptions import ApiValueError
 from brawlstars.exceptions import ApiKeyError
 from brawlstars.exceptions import ApiAttributeError
 from brawlstars.exceptions import ApiException
+
+# import events system
+from brawlstars.events import Event, ClubEvents, PlayerEvents, ClientEvents
+from brawlstars.events_client import EventsClient
+from brawlstars.errors import Maintenance, NotFound, InvalidTag
+from brawlstars.utils import correct_tag
 
 # import models into sdk package
 from brawlstars.models.accessory import Accessory

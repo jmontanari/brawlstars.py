@@ -1,23 +1,29 @@
-[tool.poetry]
+[project]
 name = "brawlstars"
-version = "1.2.0"
+version = "1.3.0"
 description = "Brawl Stars API"
-authors = ["OpenAPI Generator Community <team@openapitools.org>"]
-license = "NoLicense"
+authors = [
+  {name = "OpenAPI Generator Community", email = "team@openapitools.org"},
+]
+license = "MIT"
 readme = "README.md"
-repository = "https://github.com/GIT_USER_ID/GIT_REPO_ID"
 keywords = ["OpenAPI", "OpenAPI-Generator", "Brawl Stars API"]
-include = ["brawlstars/py.typed"]
+requires-python = ">=3.8"
 
-[tool.poetry.dependencies]
-python = "^3.8"
+dependencies = [
+  "urllib3 (>=1.25.3,<3.0.0)",
+  "python-dateutil (>=2.8.2)",
+  "pydantic (>=2)",
+  "typing-extensions (>=4.7.1)"
+]
 
-urllib3 = ">= 1.25.3 < 3.0.0"
-python-dateutil = ">= 2.8.2"
-pydantic = ">= 2"
-typing-extensions = ">= 4.7.1"
+[project.urls]
+Repository = "https://github.com/GIT_USER_ID/GIT_REPO_ID"
 
-[tool.poetry.dev-dependencies]
+[tool.poetry]
+requires-poetry = ">=2.0"
+
+[tool.poetry.group.dev.dependencies]
 pytest = ">= 7.2.1"
 pytest-cov = ">= 2.8.1"
 tox = ">= 3.9.0"
